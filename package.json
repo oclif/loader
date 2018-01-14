@@ -3,13 +3,31 @@
   "description": "loads dxcli plugins",
   "version": "0.0.0",
   "author": "Jeff Dickey @jdxcode",
-  "dependencies": {},
+  "dependencies": {
+    "@heroku-cli/color": "^1.1.1",
+    "@heroku-cli/command": "^7.0.13",
+    "@types/read-pkg": "^3.0.0",
+    "ansi-escapes": "^3.0.0",
+    "cli-flags": "^2.0.7",
+    "debug": "^3.1.0",
+    "fs-extra": "^5.0.0",
+    "globby": "^7.1.1",
+    "heroku-cli-util": "^7.0.0",
+    "lodash": "^4.17.4",
+    "read-pkg": "^3.0.0",
+    "semver": "^5.4.1"
+  },
   "devDependencies": {
     "@dxcli/dev": "^1.0.0",
     "@dxcli/dev-semantic-release": "^0.0.3",
     "@dxcli/dev-test": "^0.0.1",
     "@dxcli/dev-tslint": "^0.0.6",
+    "@types/fs-extra": "^5.0.0",
+    "@types/globby": "^6.1.0",
+    "@types/lodash": "^4.14.92",
     "@types/node": "^9.3.0",
+    "@types/semver": "^5.4.0",
+    "@types/supports-color": "^3.1.0",
     "del-cli": "^1.1.0",
     "eslint": "^4.15.0",
     "eslint-config-dxcli": "^1.1.2",
@@ -45,10 +63,10 @@
   "license": "MIT",
   "repository": "dxcli/loader",
   "scripts": {
+    "commitmsg": "dxcli-dev-commitmsg",
     "lint": "dxcli-dev lint",
-    "test": "dxcli-dev test",
-    "precommit": "dxcli-dev test",
+    "precommit": "dxcli-dev lint",
     "prepare": "del-cli lib && tsc",
-    "commitmsg": "dxcli-dev-commitmsg"
+    "test": "dxcli-dev test"
   }
 }
