@@ -20,7 +20,7 @@
   "devDependencies": {
     "@dxcli/dev": "^1.0.0",
     "@dxcli/dev-semantic-release": "^0.0.3",
-    "@dxcli/dev-test": "^0.0.1",
+    "@dxcli/dev-test": "^0.1.0",
     "@dxcli/dev-tslint": "^0.0.6",
     "@types/fs-extra": "^5.0.0",
     "@types/globby": "^6.1.0",
