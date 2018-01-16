@@ -1,3 +1,5 @@
+// tslint:disable
+
 import * as Config from '@dxcli/config'
 import {args as Args} from '@dxcli/parser'
 import {color} from '@heroku-cli/color'
