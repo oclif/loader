@@ -1,12 +1,10 @@
-import {ICommand} from '@cli-engine/config'
+import * as Config from '@dxcli/config'
+import {args as Args} from '@dxcli/parser'
 import {color} from '@heroku-cli/color'
 import Command, {flags as Flags, vars} from '@heroku-cli/command'
-import {args as Args} from 'cli-flags'
 import * as _ from 'lodash'
 import * as semver from 'semver'
 import {inspect} from 'util'
-
-import {PluginModule, PluginModuleTopic} from '.'
 
 export interface ILegacyTopic {
   id?: string
@@ -39,12 +37,13 @@ export interface ILegacyContext {
 
 export interface IFlowCommand {
   id: string
+  _version: string
 }
 
 export type LegacyCommand = IV5Command | IFlowCommand
 
-export type AnyTopic = PluginModuleTopic | ILegacyTopic
-export type AnyCommand = ICommand | LegacyCommand
+export type AnyTopic = ILegacyTopic
+export type AnyCommand = Config.ICommand | LegacyCommand
 
 export interface IV5Command {
   topic: string
@@ -85,16 +84,16 @@ export interface ILegacyFlag {
 const debug = require('debug')('cli:legacy')
 
 export class PluginLegacy {
-  public convert(m: PluginModule | ILegacyModule): PluginModule {
+  public convert(m: Config.IPluginModule | ILegacyModule): Config.IPluginModule {
     m.commands = this.convertCommands(m.commands)
-    return m as PluginModule
+    return m as Config.IPluginModule
   }
 
-  private convertCommands(c: AnyCommand[]): ICommand[] {
+  private convertCommands(c: AnyCommand[]): Config.ICommand[] {
     return c.map(c => this.convertCommand(c))
   }
 
-  private convertCommand(c: AnyCommand): ICommand {
+  private convertCommand(c: AnyCommand): Config.ICommand {
     if (this.isICommand(c)) return this.convertFromICommand(c)
     if (this.isV5Command(c)) return this.convertFromV5(c)
     if (this.isFlowCommand(c)) return this.convertFromFlow(c)
@@ -102,18 +101,18 @@ export class PluginLegacy {
     throw new Error(`Invalid command: ${inspect(c)}`)
   }
 
-  private convertFromICommand(c: any): ICommand {
+  private convertFromICommand(c: any): Config.ICommand {
     if (!c.id) c.id = _([c.topic, c.command]).compact().join(':')
     return c
   }
 
-  private convertFromFlow(c: any): ICommand {
+  private convertFromFlow(c: any): Config.ICommand {
     if (!c.id) c.id = _([c.topic, c.command]).compact().join(':')
     c._version = c._version || '0.0.0'
     return c
   }
 
-  private convertFromV5(c: IV5Command): ICommand {
+  private convertFromV5(c: IV5Command): Config.ICommand {
     class V5 extends Command {
       static id = _([c.topic, c.command]).compact().join(':')
       static description = c.description
@@ -168,22 +167,21 @@ export class PluginLegacy {
       let opts = {required: !!c.needsOrg, hidden: false, description: 'organization to use'}
       V5.flags.org = Flags.org(opts)
     }
-    return V5
+    return V5 as any
   }
 
-  private isICommand(command: AnyCommand): command is ICommand {
-    let c = command as ICommand
-    if (!c._version) return false
-    return semver.gte(c._version, '11.0.0')
+  private isICommand(command: any): command is Config.ICommand {
+    if (!command._version) return false
+    return semver.gte(command._version, '11.0.0')
   }
 
-  private isV5Command(command: AnyCommand): command is IV5Command {
+  private isV5Command(command: any): command is IV5Command {
     let c = command
     return !!(typeof c === 'object')
   }
 
   private isFlowCommand(command: AnyCommand): command is IFlowCommand {
-    let c = command as IFlowCommand
+    let c = command
     return typeof c === 'function'
     // if (c._version && deps.semver.lt(c._version, '11.0.0')) return true
   }

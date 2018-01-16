@@ -10,7 +10,14 @@ const plugins: {
   }
 } = {
   'heroku-run': {
-    commandIDs: ['run'],
+    commandIDs: [
+      'console',
+      'logs',
+      'rake',
+      'run',
+      'run:detached',
+      'run:inside',
+    ],
   },
   'heroku-cli-status': {
     commandsDir: './lib/commands',
@@ -21,11 +28,11 @@ const plugins: {
 Object.entries(plugins).forEach(([name, test]) => {
   describe(name, () => {
     it('gets pjson', async () => {
-      const plugin = await load(path.join(__dirname, '../plugins', name))
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.pjson.dxcli.commands).to.equal(test.commandsDir)
     })
     it('gets commandIDs', async () => {
-      const plugin = await load(path.join(__dirname, '../plugins', name))
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.commandIDs).to.deep.equal(test.commandIDs)
     })
   })

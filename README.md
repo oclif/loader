@@ -1,6 +1,8 @@
 @dxcli/loader
 =============
 
+loads dxcli plugins
+
 [![Version](https://img.shields.io/npm/v/@dxcli/loader.svg)](https://npmjs.org/package/@dxcli/loader)
 [![CircleCI](https://circleci.com/gh/dxcli/loader/tree/master.svg?style=svg)](https://circleci.com/gh/dxcli/loader/tree/master)
 [![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/dxcli/loader?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/loader/branch/master)

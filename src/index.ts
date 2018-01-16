@@ -1,93 +1,31 @@
-import * as fs from 'fs-extra'
+import * as Config from '@dxcli/config'
 import * as globby from 'globby'
 import * as _ from 'lodash'
 import * as path from 'path'
-import * as readPkg from 'read-pkg'
 
 import * as Legacy from './legacy'
 
-export interface PluginModuleTopic {
-  name: string
-  description?: string
-  subtopics?: { [k: string]: PluginModuleTopic }
-  hidden?: boolean
-}
-export interface PluginModule {
-  commands: any[]
-  // commands: ICommand[]
-  topic?: PluginModuleTopic
-  topics: PluginModuleTopic[]
-}
-
-export interface PluginPJSON extends readPkg.Package {
-  dxcli: {
-    commands?: string
-  }
-}
-
-export interface Plugin {
-  root: string
-  pjson: PluginPJSON
+export interface Plugin extends Config.IPlugin {
+  pjson: Config.IPluginPJSON
+  config: Config.IPluginConfig
   commandIDs: string[]
 }
 
-interface TSConfig {
-  compilerOptions: {
-    rootDir?: string
-    outDir?: string
-  }
-}
-
-export async function load(root: string): Promise<Plugin> {
-  const pjson: any = await readPkg(path.join(root, 'package.json'))
-  if (!pjson.dxcli) pjson.dxcli = pjson['cli-engine'] || {}
+export async function load({root, name, type}: {root: string, name?: string, type: string}): Promise<Plugin> {
+  const config = await Config.PluginConfig.create({root, name})
+  const pjson = config.pjson
 
   const debug = require('debug')(['@dxcli/load'].join(':'))
   debug(`loading from ${root}`)
 
-  async function fetchCommandsDir(): Promise<string | undefined> {
-    async function fetchTSConfig(root: string): Promise<TSConfig | undefined> {
-      try {
-        const tsconfig = await fs.readJSON(path.join(root, 'tsconfig.json'))
-        return tsconfig.compilerOptions && tsconfig
-      } catch (err) {
-        if (err.code !== 'ENOENT') throw err
-      }
-    }
-
-    let commandsDir = pjson.dxcli.commands
-    if (!commandsDir) return
-    commandsDir = path.join(root, commandsDir)
-    let tsconfig = await fetchTSConfig(root)
-    if (tsconfig) {
-      debug('tsconfig.json found')
-      let {rootDir, outDir} = tsconfig.compilerOptions
-      if (rootDir && outDir) {
-        try {
-          debug('using ts files')
-          require('ts-node').register()
-          const lib = path.join(root, outDir)
-          const src = path.join(root, rootDir)
-          const relative = path.relative(lib, commandsDir)
-          commandsDir = path.join(src, relative)
-        } catch (err) {
-          debug(err)
-        }
-      }
-    }
-    return commandsDir
-  }
-
-  const commandsDir = await fetchCommandsDir()
-
-  async function fetchModule(): Promise<PluginModule | undefined> {
+  async function fetchModule(): Promise<Config.IPluginModule | undefined> {
     if (!pjson.main) return
     debug(`requiring ${pjson.name}@${pjson.version}`)
 
-    const m: PluginModule = {
+    const m: Config.IPluginModule = {
       commands: [],
       topics: [],
-      ...require(path.join(root, pjson.main!)),
+      ...require(path.join(root, pjson.main)),
     }
 
     if (m.topic) m.topics.push(m.topic)
@@ -95,7 +33,7 @@ export async function load(root: string): Promise<Plugin> {
 
     // await config.engine.hooks.run('plugins:parse', { module: m, pjson: plugin.pjson })
 
-    const PluginLegacy: typeof Legacy.PluginLegacy = require('./legacy')
+    const PluginLegacy: typeof Legacy.PluginLegacy = require('./legacy').PluginLegacy
     let legacy = new PluginLegacy()
 
     return legacy.convert(m)
@@ -105,7 +43,15 @@ export async function load(root: string): Promise<Plugin> {
     async function commandIDsFromModule(): Promise<string[]> {
       const m = await fetchModule()
       if (!m || !m.commands) return []
-      return m.commands.map(m => m.id)
+      return m.commands.map(m => {
+        let id = m.id
+        if (id) return id
+        id = _.compact([(m as any).topic, (m as any).command]).join(':')
+        try {
+          m.id = id
+        } catch {}
+        return id
+      })
     }
 
     async function commandIDsFromDir(): Promise<string[]> {
@@ -116,25 +62,29 @@ export async function load(root: string): Promise<Plugin> {
         return _([...topics, command]).compact().join(':')
       }
 
-      if (!commandsDir) return []
-      debug(`loading IDs from ${commandsDir}`)
+      if (!config.commandsDir) return []
+      debug(`loading IDs from ${config.commandsDir}`)
       const files = await globby(['**/*.+(js|ts)', '!**/*.+(d.ts|test.ts|test.js)'], {
         nodir: true,
-        cwd: commandsDir,
+        cwd: config.commandsDir,
       })
       return files.map(idFromPath)
     }
 
-    return _(await Promise.all([commandIDsFromModule(), commandIDsFromDir()])).flatMap().value()
+    return _(await Promise.all([commandIDsFromModule(), commandIDsFromDir()])).flatMap().value().sort()
   }
 
   const commandIDs = await fetchCommandIDs()
-  debug('commandIDs dir: %s ids: %s', commandsDir, commandIDs.join(' '))
+  debug('commandIDs dir: %s ids: %s', config.commandsDir, commandIDs.join(' '))
 
   return {
+    name: config.name,
+    version: config.version,
+    type,
     pjson,
     root,
     commandIDs,
+    config,
   }
 }
 
