@@ -34,13 +34,16 @@ _test() {
     duration greenkeeper-lockfile-update
   fi
 
+  CWD=$(pwd)
   duration yarn install $CLI_ENGINE_UTIL_YARN_ARGS
+  cd "$CWD/plugins/heroku-run" && duration yarn
+  cd "$CWD/plugins/heroku-cli-status" && duration yarn --ignore-scripts && (tsc || true)
+  cd "$CWD"
 
   if [[ "$CLI_ENGINE_GREENKEEPER_BRANCH" == 1 ]]; then
     duration greenkeeper-lockfile-upload
   fi
 
-  CWD=$(pwd)
   NYC=(./node_modules/.bin/nyc --nycrc-path node_modules/@dxcli/dev-nyc-config/.nycrc)
   mkdir -p reports
   MOCHA_FILE="$CWD/reports/mocha.xml" \
