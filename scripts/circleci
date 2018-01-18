@@ -37,7 +37,7 @@ _test() {
   CWD=$(pwd)
   duration yarn install $CLI_ENGINE_UTIL_YARN_ARGS
   cd "$CWD/plugins/heroku-run" && duration yarn
-  cd "$CWD/plugins/heroku-cli-status" && duration yarn --ignore-scripts && (tsc || true)
+  cd "$CWD/plugins/heroku-cli-status" && duration yarn --ignore-scripts && (./node_modules/.bin/tsc || true)
   cd "$CWD"
 
   if [[ "$CLI_ENGINE_GREENKEEPER_BRANCH" == 1 ]]; then
