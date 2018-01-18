@@ -56,11 +56,11 @@ Object.entries(plugins).forEach(([name, test]) => {
   describe(name, () => {
     it('gets pjson', async () => {
       const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
-      expect(plugin.pjson.dxcli.commands).to.equal(test.commandsDir)
+      expect(plugin.config.pjson.dxcli.commands).to.equal(test.commandsDir)
     })
     it('gets commandIDs', async () => {
       const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
-      expect(plugin.commandIDs).to.deep.equal(test.commandIDs)
+      expect(plugin.commands.map(c => c.id)).to.deep.equal(test.commandIDs)
     })
     it('gets a command', async () => {
       const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
