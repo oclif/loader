@@ -35,10 +35,8 @@ export default class PluginCache extends ManifestFile {
       this.debug('fetching', key)
       let input = await fn()
       try {
-        let [, persist] = await Promise.all([
-          this.lock.add('write', {timeout: 200, reason: 'cache'}),
-          this.persist(key, input)
-        ])
+        await this.lock.add('write', {timeout: 200, reason: 'cache'})
+        const persist = this.persist(key, input)
         await this.set(['cache_key', this.cacheKey], [key, persist])
         return persist
       } catch (err) {
@@ -52,10 +50,10 @@ export default class PluginCache extends ManifestFile {
     }
   }
 
-  private async persist<T extends keyof CacheTypes>(key: T, v: CacheTypes[T]['input']): Promise<CacheTypes[T]['output']> {
+  private persist<T extends keyof CacheTypes>(key: T, v: CacheTypes[T]['input']): CacheTypes[T]['output'] {
     const map: any = {
-      commands: async (commands: ICommand[]): Promise<ICachedCommand[]> => {
-        return Promise.all(commands.map(async c => {
+      commands: (commands: ICommand[]): ICachedCommand[] => {
+        return commands.map(c => {
           return {
             id: c.id,
             base: c.base,
@@ -66,8 +64,7 @@ export default class PluginCache extends ManifestFile {
             aliases: c.aliases || [],
             help: c.help,
           }
-        }
-        ))
+        })
       }
     }
     return key in map ? map[key](v) : v
