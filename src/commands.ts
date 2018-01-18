@@ -24,14 +24,15 @@ export async function commands(plugin: Plugin, cache: Cache): Promise<ICachedCom
       return _([...topics, command]).compact().join(':')
     }
 
-    if (!plugin.config.commandsDir) return []
+    let ids = ((plugin.module && plugin.module.commands) || []).map(c => c.id) as string[]
+
+    if (!plugin.config.commandsDir) return ids
     debug(`loading IDs from ${plugin.config.commandsDir}`)
     const files = await globby(['**/*.+(js|ts)', '!**/*.+(d.ts|test.ts|test.js)'], {
       nodir: true,
       cwd: plugin.config.commandsDir,
     })
-    const ids = files.map(idFromPath)
-      .concat(((plugin.module && plugin.module.commands) || []).map(c => c.id) as string[])
+    ids = ids.concat(files.map(idFromPath))
     debug('commandIDs dir: %s ids: %s', plugin.config.commandsDir, ids.join(' '))
     return ids
   }

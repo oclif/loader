@@ -1,6 +1,7 @@
 import {IConfig, PluginConfig} from '@dxcli/config'
 import {describe, expect} from '@dxcli/dev-test'
 import cli from 'cli-ux'
+import * as fs from 'fs-extra'
 import * as path from 'path'
 
 import {load} from '../src'
@@ -50,6 +51,7 @@ let config: IConfig
 beforeEach(async () => {
   cli.config.debug = true
   config = await PluginConfig.create({root: __dirname})
+  await fs.remove(config.cacheDir)
 })
 
 Object.entries(plugins).forEach(([name, test]) => {
@@ -60,7 +62,7 @@ Object.entries(plugins).forEach(([name, test]) => {
     })
     it('gets commandIDs', async () => {
       const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
-      expect(plugin.commands.map(c => c.id)).to.deep.equal(test.commandIDs)
+      expect(plugin.commands.map(c => c.id)).to.have.members(test.commandIDs)
     })
     it('gets a command', async () => {
       const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
