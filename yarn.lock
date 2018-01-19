@@ -118,20 +118,20 @@
   dependencies:
     find-up "^2.1.0"
 
-"@dxcli/command@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@dxcli/command/-/command-0.1.6.tgz#c39669c955fa86600dfcb52f65917cb08bbf0c4a"
+"@dxcli/command@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@dxcli/command/-/command-0.1.9.tgz#257806557d6e5d0957f505533e35c7e1bfd93d7a"
   dependencies:
-    "@dxcli/config" "^0.1.13"
+    "@dxcli/config" "^0.1.17"
     "@dxcli/parser" "^0.0.2"
     "@dxcli/screen" "^0.0.0"
-    cli-ux "^3.0.0-alpha.4"
+    cli-ux "^3.1.0"
     debug "^3.1.0"
     http-call "^5.0.1"
 
-"@dxcli/config@^0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.13.tgz#72af2450f106d60d0a1c9989c1d66cb7f5c73e3b"
+"@dxcli/config@^0.1.17":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.17.tgz#e077873abfa4247e2b66be4813f46eeb8ee94df9"
   dependencies:
     debug "^3.1.0"
     fs-extra "^5.0.0"
@@ -1000,9 +1000,9 @@ cli-ux@^2.0.21:
     supports-color "^5.1.0"
     ts-lodash "^4.0.8"
 
-cli-ux@^3.0.0, cli-ux@^3.0.0-alpha.4:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.0.0.tgz#2dcd032c7e944f77b8d7b4d533f8c75443ac88fd"
+cli-ux@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.1.0.tgz#b9a7e7a30012bfc2bb20dc322044b5c0da8493ae"
   dependencies:
     "@dxcli/screen" "^0.0.0"
     "@heroku/linewrap" "^1.0.0"
