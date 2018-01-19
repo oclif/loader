@@ -1,3 +1,14 @@
+<a name="0.0.3"></a>
+## [0.0.3](https://github.com/dxcli/loader/compare/8f6bc2bb16fd1c7af6c445b978626a275b42e15f...v0.0.3) (2018-01-19)
+
+
+### Bug Fixes
+
+* add sourceMap ([e9e246f](https://github.com/dxcli/loader/commit/e9e246f))
+* engine compatibility ([e09875d](https://github.com/dxcli/loader/commit/e09875d))
+* updated cli-ux ([febc4d0](https://github.com/dxcli/loader/commit/febc4d0))
+* updated config ([11603df](https://github.com/dxcli/loader/commit/11603df))
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/dxcli/loader/compare/7190ce410b07d52dc04fe1f424da8d16b297a0a7...v0.0.2) (2018-01-19)
 
