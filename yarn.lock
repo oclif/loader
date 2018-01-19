@@ -118,26 +118,16 @@
   dependencies:
     find-up "^2.1.0"
 
-"@dxcli/command@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@dxcli/command/-/command-0.1.1.tgz#8670eae6c303d7883f3177a5aa44cac31d74af48"
+"@dxcli/command@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@dxcli/command/-/command-0.1.3.tgz#94373bede3170bdeace87ca7f06984ce66dc67bc"
   dependencies:
-    "@dxcli/config" "^0.1.6"
+    "@dxcli/config" "^0.1.9"
     "@dxcli/parser" "^0.0.2"
     "@dxcli/screen" "^0.0.0"
-    cli-ux "^3.0.0-alpha.2"
+    cli-ux "^3.0.0-alpha.4"
     debug "^3.1.0"
     http-call "^5.0.1"
-
-"@dxcli/config@^0.1.6":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.7.tgz#2d55c744f80728cb97401907def07b09c968fb0d"
-  dependencies:
-    debug "^3.1.0"
-    fs-extra "^5.0.0"
-    load-json-file "^4.0.0"
-    lodash "^4.17.4"
-    read-pkg-up "^3.0.0"
 
 "@dxcli/config@^0.1.9":
   version "0.1.9"
@@ -997,19 +987,20 @@ cli-ux@^2.0.21:
     supports-color "^5.1.0"
     ts-lodash "^4.0.8"
 
-cli-ux@^3.0.0-alpha.2:
-  version "3.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.0.0-alpha.2.tgz#b77b56700331101966dfb90d6298c30d2c1c119f"
+cli-ux@^3.0.0-alpha.4, cli-ux@^3.0.0-alpha.5:
+  version "3.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.0.0-alpha.5.tgz#12d6eafb9cc597556ea750a93676abea85d43d4c"
   dependencies:
     "@dxcli/screen" "^0.0.0"
     "@heroku/linewrap" "^1.0.0"
     ansi-styles "^3.2.0"
+    cardinal "^1.0.0"
     chalk "^2.3.0"
     fs-extra "^5.0.0"
     lodash "^4.17.4"
     password-prompt "^1.0.3"
     rxjs "^5.5.6"
-    semver "^5.4.1"
+    semver "^5.5.0"
     strip-ansi "^4.0.0"
     supports-color "^5.1.0"
 
