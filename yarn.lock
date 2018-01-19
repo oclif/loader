@@ -214,9 +214,9 @@
     read-pkg-up "^3.0.0"
     supports-color "^5.1.0"
 
-"@dxcli/manifest-file@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@dxcli/manifest-file/-/manifest-file-0.0.0.tgz#ba1299fa56b8efc62e3223b431926f91dee59234"
+"@dxcli/manifest-file@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@dxcli/manifest-file/-/manifest-file-0.0.1.tgz#3914654ef3b3f75216eaa93da4055d64835854fc"
   dependencies:
     debug "^3.1.0"
     fs-extra "^5.0.0"
