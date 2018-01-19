@@ -1,3 +1,11 @@
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/dxcli/loader/compare/11603df40264ce207b904febaf0aad266c93a3b8...v0.0.4) (2018-01-19)
+
+
+### Bug Fixes
+
+* yarn upgrade ([10bde2f](https://github.com/dxcli/loader/commit/10bde2f))
+
 <a name="0.0.3"></a>
 ## [0.0.3](https://github.com/dxcli/loader/compare/8f6bc2bb16fd1c7af6c445b978626a275b42e15f...v0.0.3) (2018-01-19)
 
