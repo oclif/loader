@@ -8,12 +8,7 @@ import {Plugin} from '.'
 import Cache from './cache'
 import {undefault} from './util'
 
-export interface ICachedCommand extends Config.ICachedCommand {
-  id: string
-  load(): Config.ICommand
-}
-
-export async function commands(plugin: Plugin, cache: Cache): Promise<ICachedCommand[]> {
+export async function commands(plugin: Plugin, cache: Cache): Promise<Config.ICachedCommand[]> {
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
 
   async function fetchCommandIDs(): Promise<string[]> {
@@ -65,9 +60,9 @@ export async function commands(plugin: Plugin, cache: Cache): Promise<ICachedCom
       .compact()
       .value()
   }))
-    .map((cmd: Config.ICachedCommand): ICachedCommand => ({
+    .map((cmd: Config.ICachedCommand): Config.ICachedCommand => ({
       ...cmd,
-      id: cmd.id!,
-      load: () => findCommand(cmd.id!),
+      id: cmd.id,
+      load: async () => findCommand(cmd.id),
     }))
 }

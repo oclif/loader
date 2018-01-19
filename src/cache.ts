@@ -55,14 +55,15 @@ export default class PluginCache extends ManifestFile {
       commands: (commands: ICommand[]): ICachedCommand[] => {
         return commands.map(c => {
           return {
+            _base: c._base,
             id: c.id,
-            base: c.base,
             description: c.description,
             usage: c.usage,
             plugin: _.pick(c.plugin!, ['name', 'version', 'type', 'root']),
             hidden: c.hidden,
             aliases: c.aliases || [],
             help: c.help,
+            load: async () => c,
           }
         })
       }

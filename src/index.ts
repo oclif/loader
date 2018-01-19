@@ -12,7 +12,7 @@ import {undefault} from './util'
 export interface Plugin extends Config.IPlugin {
   config: Config.IConfig
   module?: Config.IPluginModule
-  commands: Commands.ICachedCommand[]
+  commands: Config.ICachedCommand[]
   topics: Config.ITopic[]
   plugins: Plugin[]
 }
@@ -56,5 +56,3 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
 
   return plugin
 }
-
-export {ICachedCommand} from './commands'
