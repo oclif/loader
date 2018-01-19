@@ -7,7 +7,7 @@
   "dependencies": {
     "@dxcli/command": "^0.1.0",
     "@dxcli/config": "^0.1.3",
-    "@dxcli/manifest-file": "^0.0.0",
+    "@dxcli/manifest-file": "^0.0.1",
     "@dxcli/parser": "^0.0.2",
     "@heroku-cli/color": "^1.1.1",
     "@heroku-cli/command": "^7.0.14",
