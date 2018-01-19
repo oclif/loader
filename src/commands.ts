@@ -14,7 +14,7 @@ export interface ICachedCommand extends Config.ICachedCommand {
 }
 
 export async function commands(plugin: Plugin, cache: Cache): Promise<ICachedCommand[]> {
-  const debug = require('debug')(['@dxcli/load'].join(':'))
+  const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
 
   async function fetchCommandIDs(): Promise<string[]> {
     function idFromPath(file: string) {

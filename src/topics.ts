@@ -17,7 +17,7 @@ function topicsToArray(input: any, base?: string): Config.ITopic[] {
 }
 
 export async function topics(plugin: Plugin, cache: Cache): Promise<Config.ITopic[]> {
-  const debug = require('debug')(['@dxcli/load'].join(':'))
+  const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
   const pluginTopics = async () => {
     try {
       debug('fetching topics')

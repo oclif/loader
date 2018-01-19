@@ -10,37 +10,38 @@ import * as Topics from './topics'
 import {undefault} from './util'
 
 export interface Plugin extends Config.IPlugin {
-  config: Config.IPluginConfig
+  config: Config.IConfig
   module?: Config.IPluginModule
   commands: Commands.ICachedCommand[]
   topics: Config.ITopic[]
   plugins: Plugin[]
 }
 
-export async function load({config, root, name, type}: {config: Config.IConfig, root: string, name?: string, type: string}): Promise<Plugin> {
-  const pluginConfig = await Config.PluginConfig.create({root, name})
-  const pjson = pluginConfig.pjson
+export async function load({root, name, type, baseConfig}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string}): Promise<Plugin> {
+  const config = await Config.read({root, name, baseConfig})
+  const pjson = config.pjson
   name = pjson.name
   const version = pjson.version
 
   const plugin: Plugin = {
     name,
     version,
-    root: pluginConfig.root,
+    root: config.root,
     type,
-    config: pluginConfig,
+    config,
     commands: [],
     topics: [],
     plugins: [],
   }
 
-  if (pjson.plugins) {
-    if (typeof pjson.plugins === 'string') {
-      plugin.plugins = undefault(require(path.join(pjson.root, pjson.plugins)))(config)
+  const plugins = pjson.dxcli.plugins || []
+  if (plugins) {
+    if (typeof plugins === 'string') {
+      plugin.plugins = undefault(require(path.join(pjson.root, plugins)))(config)
     } else {
-      plugin.plugins = _.compact(await Promise.all<Plugin>(pjson.plugins.map(async (p: string) => {
+      plugin.plugins = _.compact(await Promise.all<Plugin | undefined>(plugins.map(async (p: string) => {
         try {
-          return await load({config, root: config.root, type, name: p})
+          return await load({baseConfig: config, root: config.root, type, name: p})
         } catch (err) {
           cli.warn(err)
         }

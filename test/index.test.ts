@@ -1,4 +1,3 @@
-import {IConfig, PluginConfig} from '@dxcli/config'
 import {describe, expect} from '@dxcli/dev-test'
 import cli from 'cli-ux'
 import * as fs from 'fs-extra'
@@ -46,31 +45,31 @@ const plugins: {
   }
 }
 
-let config: IConfig
-
 beforeEach(async () => {
   cli.config.debug = true
-  config = await PluginConfig.create({root: __dirname})
-  await fs.remove(config.cacheDir)
 })
 
 Object.entries(plugins).forEach(([name, test]) => {
   describe(name, () => {
     it('gets pjson', async () => {
-      const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.config.pjson.dxcli.commands).to.equal(test.commandsDir)
+      await fs.remove(plugin.config.cacheDir)
     })
     it('gets commandIDs', async () => {
-      const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.commands.map(c => c.id)).to.have.members(test.commandIDs)
+      await fs.remove(plugin.config.cacheDir)
     })
     it('gets a command', async () => {
-      const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.commands.find(c => c.id === test.command.id)).to.nested.include(test.command)
+      await fs.remove(plugin.config.cacheDir)
     })
     it('gets a topic', async () => {
-      const plugin = await load({config, root: path.join(__dirname, '../plugins', name), type: 'user'})
+      const plugin = await load({root: path.join(__dirname, '../plugins', name), type: 'user'})
       expect(plugin.topics.find(t => t.name === test.topic.name)).to.nested.include(test.topic)
+      await fs.remove(plugin.config.cacheDir)
     })
   })
 })

@@ -22,7 +22,7 @@ export default class PluginCache extends ManifestFile {
 
   constructor(config: IConfig, {type, name, version}: {type: string, name: string, version: string}) {
     const file = path.join(config.cacheDir, 'plugin_cache', [type, `${name}.json`].join(path.sep))
-    super('plugin:cache', file)
+    super(['@dxcli/load', name].join(':'), file)
     this.type = 'cache'
     this.cacheKey = [config.version, version].join(':')
   }
