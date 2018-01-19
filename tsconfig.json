@@ -6,6 +6,7 @@
     "module": "commonjs",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "sourceMap": true,
     "outDir": "./lib",
     "rootDir": "./src",
     "strict": true,
