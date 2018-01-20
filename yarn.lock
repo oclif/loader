@@ -139,6 +139,16 @@
     lodash "^4.17.4"
     read-pkg "^3.0.0"
 
+"@dxcli/config@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.18.tgz#2f8fed892f824a65e5dc5ac8d3fdce7c3150aee6"
+  dependencies:
+    debug "^3.1.0"
+    fs-extra "^5.0.0"
+    load-json-file "^4.0.0"
+    lodash "^4.17.4"
+    read-pkg "^3.0.0"
+
 "@dxcli/dev-commitmsg@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@dxcli/dev-commitmsg/-/dev-commitmsg-0.0.3.tgz#8941971c9778b675dd14c407c1123b8bef397757"
@@ -163,11 +173,12 @@
     "@semantic-release/npm" "^2.6.1"
     semantic-release "^12.2.0"
 
-"@dxcli/dev-test@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-test/-/dev-test-0.2.2.tgz#9d46b00b5feacc45320c93b8c2576437dd42bded"
+"@dxcli/dev-test@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-test/-/dev-test-0.4.0.tgz#5a12fa1a3cdc783fda135f8aa2ede5c18d272bf3"
   dependencies:
     "@dxcli/dev-nyc-config" "^0.0.3"
+    "@dxcli/engine" "^0.1.0"
     "@types/ansi-styles" "^2.0.30"
     "@types/chai" "^4.1.1"
     "@types/chai-as-promised" "^7.1.0"
@@ -202,6 +213,35 @@
     read-pkg-up "^3.0.0"
     supports-color "^5.1.0"
 
+"@dxcli/engine@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@dxcli/engine/-/engine-0.1.0.tgz#7006bae7e8e5267e8e6338671f1d6d5870e53fc6"
+  dependencies:
+    "@dxcli/command" "^0.1.9"
+    "@dxcli/config" "^0.1.18"
+    "@dxcli/loader" "^0.0.5"
+    cli-ux "^3.1.0"
+    rxjs "^5.5.6"
+
+"@dxcli/loader@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@dxcli/loader/-/loader-0.0.5.tgz#60757837272c8a92b526f861f1959d0df8c9e619"
+  dependencies:
+    "@dxcli/command" "^0.1.9"
+    "@dxcli/config" "^0.1.17"
+    "@dxcli/manifest-file" "^0.0.1"
+    "@dxcli/parser" "^0.0.2"
+    "@heroku-cli/color" "^1.1.1"
+    "@heroku-cli/command" "^7.0.14"
+    ansi-escapes "^3.0.0"
+    cli-ux "^3.1.0"
+    debug "^3.1.0"
+    fs-extra "^5.0.0"
+    globby "^7.1.1"
+    lodash "^4.17.4"
+    semver "^5.5.0"
+    supports-color "^5.1.0"
+
 "@dxcli/manifest-file@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@dxcli/manifest-file/-/manifest-file-0.0.1.tgz#3914654ef3b3f75216eaa93da4055d64835854fc"
@@ -223,6 +263,14 @@
 "@dxcli/screen@^0.0.0":
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/@dxcli/screen/-/screen-0.0.0.tgz#a85f69bfb00d3961656bad5d7b12f8e603c7ce09"
+
+"@dxcli/version@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@dxcli/version/-/version-0.1.2.tgz#21891976cd57be55bf99d85388d959483d023ea8"
+  dependencies:
+    "@dxcli/command" "^0.1.9"
+    "@dxcli/config" "^0.1.17"
+    cli-ux "^3.1.0"
 
 "@heroku-cli/color@^1.0.4", "@heroku-cli/color@^1.1.1":
   version "1.1.1"

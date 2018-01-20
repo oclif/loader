@@ -15,6 +15,7 @@ export interface Plugin extends Config.IPlugin {
   commands: Config.ICachedCommand[]
   topics: Config.ITopic[]
   plugins: Plugin[]
+  hooks: {[k: string]: string[]}
 }
 
 export async function load({root, name, type, baseConfig}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string}): Promise<Plugin> {
@@ -29,6 +30,7 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
     root: config.root,
     type,
     config,
+    hooks: {...config.hooks},
     commands: [],
     topics: [],
     plugins: [],
@@ -53,6 +55,12 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
   const cache = new Cache(config, plugin)
   plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))
+
+  for (let p of plugin.plugins) {
+    for (let [hook, hooks] of Object.entries(p.hooks)) {
+      plugin.hooks[hook] = [...plugin.hooks[hook] || [], ...hooks]
+    }
+  }
 
   return plugin
 }

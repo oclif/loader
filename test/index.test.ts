@@ -3,7 +3,7 @@ import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
-import {load} from '../src'
+import {load, Plugin} from '../src'
 
 const plugins: {
   [k: string]: {
@@ -71,5 +71,18 @@ Object.entries(plugins).forEach(([name, test]) => {
       expect(plugin.topics.find(t => t.name === test.topic.name)).to.nested.include(test.topic)
       await fs.remove(plugin.config.cacheDir)
     })
+  })
+})
+
+const testLoad = (name: string, description: string, fn: (plugin: Plugin) => void) => {
+  it(description, async () => {
+    const plugin = await load({root: __dirname, type: 'core', name})
+    fn(plugin)
+  })
+}
+
+describe('hooks', () => {
+  testLoad('@dxcli/version', 'gets hooks from @dxcli/version', plugin => {
+    expect(plugin.hooks.init).to.have.members([path.resolve(__dirname, '../node_modules/@dxcli/version/lib/hooks/init')])
   })
 })
