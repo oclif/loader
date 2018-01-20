@@ -1,3 +1,11 @@
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/dxcli/loader/compare/7b2d38f81698970c5a6e06a1f370ec8c28705c6d...v0.1.3) (2018-01-20)
+
+
+### Bug Fixes
+
+* updated cli-ux ([ff492aa](https://github.com/dxcli/loader/commit/ff492aa))
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/dxcli/loader/compare/890278cbd41a2bc1b37ce5b72a934824d142d2f7...v0.1.2) (2018-01-20)
 
