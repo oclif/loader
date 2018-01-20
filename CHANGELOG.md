@@ -1,3 +1,11 @@
+<a name="0.1.4"></a>
+## [0.1.4](https://github.com/dxcli/loader/compare/169a48bd24c38e2a874f55c24dd4ef0dbb3ccb6a...v0.1.4) (2018-01-20)
+
+
+### Bug Fixes
+
+* update deps ([3042715](https://github.com/dxcli/loader/commit/3042715))
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/dxcli/loader/compare/7b2d38f81698970c5a6e06a1f370ec8c28705c6d...v0.1.3) (2018-01-20)
 
