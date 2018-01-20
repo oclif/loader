@@ -1,3 +1,11 @@
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/dxcli/loader/compare/d7a67d6dc3b11b6bc227a2f5263927d6a87ce907...v0.1.0) (2018-01-20)
+
+
+### Features
+
+* added hooks ([0526328](https://github.com/dxcli/loader/commit/0526328))
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/dxcli/loader/compare/10bde2fde38cae2c0a6458e550196c12642b703f...v0.0.5) (2018-01-19)
 
