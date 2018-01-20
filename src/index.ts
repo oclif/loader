@@ -9,22 +9,13 @@ import * as Module from './module'
 import * as Topics from './topics'
 import {undefault} from './util'
 
-export interface Plugin extends Config.IPlugin {
-  config: Config.IConfig
-  module?: Config.IPluginModule
-  commands: Config.ICachedCommand[]
-  topics: Config.ITopic[]
-  plugins: Plugin[]
-  hooks: {[k: string]: string[]}
-}
-
-export async function load({root, name, type, baseConfig}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string}): Promise<Plugin> {
+export async function load({root, name, type, baseConfig}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string}): Promise<Config.IPlugin> {
   const config = await Config.read({root, name, baseConfig})
   const pjson = config.pjson
   name = pjson.name
   const version = pjson.version
 
-  const plugin: Plugin = {
+  const plugin: Config.IPlugin = {
     name,
     version,
     root: config.root,
@@ -41,7 +32,7 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
     if (typeof plugins === 'string') {
       plugin.plugins = undefault(require(path.join(pjson.root, plugins)))(config)
     } else {
-      plugin.plugins = _.compact(await Promise.all<Plugin | undefined>(plugins.map(async (p: string) => {
+      plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(plugins.map(async (p: string) => {
         try {
           return await load({baseConfig: config, root: config.root, type, name: p})
         } catch (err) {
@@ -51,7 +42,7 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
     }
   }
 
-  plugin.module = await Module.fetch(plugin)
+  plugin.module = await Module.fetch(plugin, config.engine)
   const cache = new Cache(config, plugin)
   plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))

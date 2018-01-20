@@ -1,9 +1,10 @@
-import {describe, expect} from '@dxcli/dev-test'
+import * as Config from '@dxcli/config'
+import {expect} from 'chai'
 import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
-import {load, Plugin} from '../src'
+import {load} from '../src'
 
 const plugins: {
   [k: string]: {
@@ -13,24 +14,24 @@ const plugins: {
     topic: any
   }
 } = {
-  'heroku-run': {
-    commandIDs: [
-      'console',
-      'logs',
-      'rake',
-      'run',
-      'run:detached',
-      'run:inside',
-    ],
-    topic: {
-      name: 'run',
-      description: 'run a one-off process inside a Heroku dyno',
-    },
-    command: {
-      id: 'run',
-      description: 'run a one-off process inside a heroku dyno',
-    },
-  },
+  // 'heroku-run': {
+  //   commandIDs: [
+  //     'console',
+  //     'logs',
+  //     'rake',
+  //     'run',
+  //     'run:detached',
+  //     'run:inside',
+  //   ],
+  //   topic: {
+  //     name: 'run',
+  //     description: 'run a one-off process inside a Heroku dyno',
+  //   },
+  //   command: {
+  //     id: 'run',
+  //     description: 'run a one-off process inside a heroku dyno',
+  //   },
+  // },
   'heroku-cli-status': {
     commandsDir: './lib/commands',
     commandIDs: ['status'],
@@ -74,7 +75,7 @@ Object.entries(plugins).forEach(([name, test]) => {
   })
 })
 
-const testLoad = (name: string, description: string, fn: (plugin: Plugin) => void) => {
+const testLoad = (name: string, description: string, fn: (plugin: Config.IPlugin) => void) => {
   it(description, async () => {
     const plugin = await load({root: __dirname, type: 'core', name})
     fn(plugin)

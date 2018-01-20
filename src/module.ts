@@ -1,11 +1,9 @@
 import * as Config from '@dxcli/config'
 import * as path from 'path'
 
-import {Plugin} from '.'
-import * as Legacy from './legacy'
 import {undefault} from './util'
 
-export async function fetch(plugin: Plugin): Promise<Config.IPluginModule | undefined> {
+export async function fetch(plugin: Config.IPlugin, engine?: Config.IEngine): Promise<Config.IPluginModule | undefined> {
   if (!plugin.config.pjson.main) return
 
   const m: Config.IPluginModule = {
@@ -17,10 +15,7 @@ export async function fetch(plugin: Plugin): Promise<Config.IPluginModule | unde
   if (m.topic) m.topics.push(m.topic)
   m.commands = m.commands.map(undefault)
 
-  // await config.engine.hooks.run('plugins:parse', { module: m, pjson: plugin.pjson })
+  if (engine) await engine.runHook('plugins:parse', {module: m, plugin})
 
-  const PluginLegacy: typeof Legacy.PluginLegacy = require('./legacy').PluginLegacy
-  let legacy = new PluginLegacy()
-
-  return legacy.convert(m)
+  return m
 }

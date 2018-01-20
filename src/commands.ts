@@ -4,11 +4,10 @@ import * as globby from 'globby'
 import * as _ from 'lodash'
 import * as path from 'path'
 
-import {Plugin} from '.'
 import Cache from './cache'
 import {undefault} from './util'
 
-export async function commands(plugin: Plugin, cache: Cache): Promise<Config.ICachedCommand[]> {
+export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Config.ICachedCommand[]> {
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
 
   async function fetchCommandIDs(): Promise<string[]> {

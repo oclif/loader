@@ -1,5 +1,4 @@
 import ManifestFile from '@dxcli/manifest-file'
-import * as _ from 'lodash'
 import * as path from 'path'
 
 import {ICachedCommand, ICommand, IConfig, ITopic} from '@dxcli/config'
@@ -59,7 +58,7 @@ export default class PluginCache extends ManifestFile {
             id: c.id,
             description: c.description,
             usage: c.usage,
-            plugin: _.pick(c.plugin!, ['name', 'version', 'type', 'root']),
+            plugin: c.plugin!,
             hidden: c.hidden,
             aliases: c.aliases || [],
             help: c.help,

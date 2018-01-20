@@ -3,7 +3,6 @@ import cli from 'cli-ux'
 import * as _ from 'lodash'
 
 import Cache from './cache'
-import {Plugin} from './index'
 
 function topicsToArray(input: any, base?: string): Config.ITopic[] {
   if (!input) return []
@@ -16,7 +15,7 @@ function topicsToArray(input: any, base?: string): Config.ITopic[] {
   })
 }
 
-export async function topics(plugin: Plugin, cache: Cache): Promise<Config.ITopic[]> {
+export async function topics(plugin: Config.IPlugin, cache: Cache): Promise<Config.ITopic[]> {
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
   const pluginTopics = async () => {
     try {
