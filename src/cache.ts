@@ -19,11 +19,11 @@ export interface CacheTypes {
 export default class PluginCache extends ManifestFile {
   readonly cacheKey: string
 
-  constructor(config: IConfig, {type, name, version}: {type: string, name: string, version: string}) {
+  constructor(config: IConfig, {type, name, version}: {type: string, name: string, version: string}, lastUpdated: Date) {
     const file = path.join(config.cacheDir, 'plugin_cache', [type, `${name}.json`].join(path.sep))
     super(['@dxcli/load', name].join(':'), file)
     this.type = 'cache'
-    this.cacheKey = [config.version, version].join(':')
+    this.cacheKey = [config.version, version, lastUpdated].join(':')
   }
 
   async fetch<T extends keyof CacheTypes>(key: T, fn: () => Promise<CacheTypes[T]['input']>): Promise<CacheTypes[T]['output']> {

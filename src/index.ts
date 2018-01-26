@@ -1,5 +1,7 @@
 import * as Config from '@dxcli/config'
 import cli from 'cli-ux'
+import * as fs from 'fs-extra'
+import * as globby from 'globby'
 import * as _ from 'lodash'
 import * as path from 'path'
 
@@ -43,7 +45,7 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
   }
 
   plugin.module = await Module.fetch(plugin, config.engine)
-  const cache = new Cache(config, plugin)
+  const cache = new Cache(config, plugin, await lastUpdated(plugin))
   plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))
 
@@ -54,4 +56,19 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
   }
 
   return plugin
+}
+
+async function lastUpdated(plugin: Config.IPlugin): Promise<Date> {
+  try {
+    let files = await globby([`${plugin.config.commandsDir}**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
+    files = files.concat(...Object.values(plugin.config.hooks))
+    files = files.map(f => require.resolve(f))
+    let stats = await Promise.all(files.map(f => fs.stat(f)))
+    const max = _.maxBy(stats, 'mtime')
+    if (!max) return new Date(0)
+    return max.mtime
+  } catch (err) {
+    cli.warn(err)
+    return new Date(0)
+  }
 }
