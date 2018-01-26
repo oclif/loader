@@ -49,7 +49,6 @@ export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Co
   }
 
   return (await cache.fetch('commands', async (): Promise<Config.ICommand[]> => {
-    debug('fetching commands')
     return _(await fetchCommandIDs())
       .map(id => {
         try {

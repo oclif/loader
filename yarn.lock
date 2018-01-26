@@ -152,6 +152,16 @@
     lodash "^4.17.4"
     read-pkg "^3.0.0"
 
+"@dxcli/config@^0.1.26":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.26.tgz#36458424cb8cc9c1499659bbff3676fa7b0292da"
+  dependencies:
+    debug "^3.1.0"
+    fs-extra "^5.0.0"
+    load-json-file "^4.0.0"
+    lodash "^4.17.4"
+    read-pkg "^3.0.0"
+
 "@dxcli/dev-commitmsg@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@dxcli/dev-commitmsg/-/dev-commitmsg-0.0.4.tgz#c26f6b5856aa50d91dd36adc18d0c48f3d0dfa61"
@@ -176,43 +186,33 @@
     "@semantic-release/npm" "^2.6.4"
     semantic-release "^12.2.2"
 
-"@dxcli/dev-tslint@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-tslint/-/dev-tslint-0.0.15.tgz#54dbd49deccaaaf9dc590d83894415e3fab0b0ac"
+"@dxcli/dev-tslint@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-tslint/-/dev-tslint-0.0.16.tgz#84aa077d5f0c92f770b2b7eb091588c8553b4c9f"
   dependencies:
     tslint "^5.9.1"
     tslint-xo "^0.5.0"
 
-"@dxcli/engine@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@dxcli/engine/-/engine-0.1.8.tgz#edbbf30cec5f11f6d3f5ccda5f19b52050245c78"
+"@dxcli/engine@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@dxcli/engine/-/engine-0.1.9.tgz#6179b1ac925d0f04cd143a9696cccdc52e38ed01"
   dependencies:
     "@dxcli/command" "^0.1.16"
     "@dxcli/config" "^0.1.24"
-    "@dxcli/loader" "^0.1.7"
+    "@dxcli/loader" "^0.2.0"
     cli-ux "^3.1.5"
     debug "^3.1.0"
 
-"@dxcli/loader@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@dxcli/loader/-/loader-0.1.7.tgz#4fb43bf07987b2780abea7dd66aa9e334fa0fe57"
+"@dxcli/loader@^0.2.0":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@dxcli/loader/-/loader-0.2.2.tgz#e124e97ca73252f11ebf673a2b6a75bd63d842bd"
   dependencies:
     "@dxcli/config" "^0.1.24"
-    "@dxcli/manifest-file" "^0.0.3"
+    "@dxcli/manifest-file" "^0.0.4"
     cli-ux "^3.1.5"
     debug "^3.1.0"
     globby "^7.1.1"
     lodash "^4.17.4"
-
-"@dxcli/manifest-file@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxcli/manifest-file/-/manifest-file-0.0.3.tgz#0bb44827b354e844f3276d4e38571104c2b8ecb2"
-  dependencies:
-    debug "^3.1.0"
-    fs-extra "^5.0.0"
-    load-json-file "^4.0.0"
-    lodash "^4.17.4"
-    rwlockfile "^2.0.21"
 
 "@dxcli/manifest-file@^0.0.4":
   version "0.0.4"
@@ -1008,6 +1008,22 @@ cli-ux@^3.1.3:
 cli-ux@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.1.5.tgz#c6d3ed628a54067ad2084dd465ea015ca26488c9"
+  dependencies:
+    "@dxcli/screen" "^0.0.1"
+    "@heroku/linewrap" "^1.0.0"
+    ansi-styles "^3.2.0"
+    cardinal "^1.0.0"
+    chalk "^2.3.0"
+    fs-extra "^5.0.0"
+    lodash "^4.17.4"
+    password-prompt "^1.0.4"
+    semver "^5.5.0"
+    strip-ansi "^4.0.0"
+    supports-color "^5.1.0"
+
+cli-ux@^3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.1.6.tgz#e1190fcc429ae6a101dbaf24640027485b9b3506"
   dependencies:
     "@dxcli/screen" "^0.0.1"
     "@heroku/linewrap" "^1.0.0"

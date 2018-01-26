@@ -3,7 +3,6 @@ import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import * as _ from 'lodash'
-import * as path from 'path'
 
 import Cache from './cache'
 import * as Commands from './commands'
@@ -29,19 +28,16 @@ export async function load({root, name, type, baseConfig, resetCache}: {baseConf
     plugins: [],
   }
 
-  const plugins = pjson.dxcli.plugins || []
-  if (plugins) {
-    if (typeof plugins === 'string') {
-      plugin.plugins = undefault(require(path.join(pjson.root, plugins)))(config)
-    } else {
-      plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(plugins.map(async (p: string) => {
-        try {
-          return await load({baseConfig: config, root: config.root, type, name: p})
-        } catch (err) {
-          cli.warn(err)
-        }
-      })))
-    }
+  if (config.pluginsModule) {
+    plugin.plugins = await undefault(require(config.pluginsModule))(config)
+  } else if (pjson.dxcli.plugins) {
+    plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(pjson.dxli.plugins.map(async (p: string) => {
+      try {
+        return await load({baseConfig: config, root: config.root, type, name: p})
+      } catch (err) {
+        cli.warn(err)
+      }
+    })))
   }
 
   plugin.module = await Module.fetch(plugin, config.engine)
@@ -60,7 +56,7 @@ export async function load({root, name, type, baseConfig, resetCache}: {baseConf
 
 async function lastUpdated(plugin: Config.IPlugin): Promise<Date> {
   try {
-    let files = await globby([`${plugin.config.commandsDir}**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
+    let files = await globby([`${plugin.config.commandsDir}/**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
     files = files.concat(...Object.values(plugin.config.hooks))
     files = files.map(f => require.resolve(f))
     let stats = await Promise.all(files.map(f => fs.stat(f)))
