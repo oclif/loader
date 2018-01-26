@@ -1,3 +1,11 @@
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/dxcli/loader/compare/929b009e05f2edaaa1c02d9605d9d8d3f9fa0da0...v0.2.1) (2018-01-26)
+
+
+### Bug Fixes
+
+* cache key busting ([5af1f79](https://github.com/dxcli/loader/commit/5af1f79))
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/dxcli/loader/compare/b7ead9ad26d80406730b5b0699fcf29bd909996f...v0.2.0) (2018-01-26)
 
