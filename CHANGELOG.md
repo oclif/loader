@@ -1,3 +1,16 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/dxcli/loader/compare/b7ead9ad26d80406730b5b0699fcf29bd909996f...v0.2.0) (2018-01-26)
+
+
+### Bug Fixes
+
+* updated deps ([929b009](https://github.com/dxcli/loader/commit/929b009))
+
+
+### Features
+
+* added cache busting ([9d8356d](https://github.com/dxcli/loader/commit/9d8356d))
+
 <a name="0.1.7"></a>
 ## [0.1.7](https://github.com/dxcli/loader/compare/0002fcb5bb63cfdd05ae82d019ff6fe935125202...v0.1.7) (2018-01-26)
 
