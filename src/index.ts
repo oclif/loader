@@ -30,8 +30,8 @@ export async function load({root, name, type, baseConfig, resetCache}: {baseConf
 
   if (config.pluginsModule) {
     plugin.plugins = await undefault(require(config.pluginsModule))(config)
-  } else if (pjson.dxcli.plugins) {
-    plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(pjson.dxli.plugins.map(async (p: string) => {
+  } else if (_.isArray(pjson.dxcli.plugins)) {
+    plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(pjson.dxcli.plugins.map(async (p: string) => {
       try {
         return await load({baseConfig: config, root: config.root, type, name: p})
       } catch (err) {
