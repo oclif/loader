@@ -7,7 +7,7 @@
   "dependencies": {
     "@dxcli/config": "^0.1.26",
     "@dxcli/manifest-file": "^0.0.4",
-    "cli-ux": "^3.1.6",
+    "cli-ux": "^3.2.0",
     "debug": "^3.1.0",
     "globby": "^7.1.1",
     "lodash": "^4.17.4"
@@ -15,19 +15,16 @@
   "devDependencies": {
     "@dxcli/dev-nyc-config": "^0.0.3",
     "@dxcli/dev-semantic-release": "^0.1.0",
-    "@dxcli/dev-tslint": "^0.0.16",
-    "@dxcli/engine": "^0.1.9",
+    "@dxcli/dev-tslint": "^0.0.17",
+    "@dxcli/engine": "^0.1.11",
     "@dxcli/version": "^0.1.5",
-    "@types/ansi-styles": "^2.0.30",
     "@types/chai": "^4.1.2",
     "@types/fs-extra": "^5.0.0",
     "@types/globby": "^6.1.0",
-    "@types/lodash": "^4.14.96",
+    "@types/lodash": "^4.14.97",
     "@types/mocha": "^2.2.47",
-    "@types/nock": "^9.1.2",
-    "@types/node": "^9.3.0",
+    "@types/node-notifier": "^0.0.28",
     "@types/read-pkg": "^3.0.0",
-    "@types/strip-ansi": "^3.0.0",
     "chai": "^4.1.2",
     "eslint": "^4.16.0",
     "eslint-config-dxcli": "^1.1.4",
@@ -40,6 +37,7 @@
     "nps-utils": "^1.5.0",
     "nyc": "^11.4.1",
     "ts-node": "^4.1.0",
+    "typedoc": "^0.9.0",
     "typescript": "^2.6.2"
   },
   "engines": {

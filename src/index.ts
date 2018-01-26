@@ -10,16 +10,27 @@ import * as Module from './module'
 import * as Topics from './topics'
 import {undefault} from './util'
 
-export async function load({root, name, type, baseConfig, resetCache}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string, resetCache?: boolean}): Promise<Config.IPlugin> {
-  const config = await Config.read({root, name, baseConfig})
+export interface LoadOptions {
+  root: string
+  type: string
+  baseConfig?: Config.IConfig
+  name?: string
+  tag?: string
+  resetCache?: boolean
+}
+
+export async function load(opts: LoadOptions): Promise<Config.IPlugin> {
+  const config = await Config.read(opts)
   const pjson = config.pjson
-  name = pjson.name
+  const name = pjson.name
   const version = pjson.version
+  const type = opts.type
 
   const plugin: Config.IPlugin = {
     name,
     version,
     root: config.root,
+    tag: opts.tag,
     type,
     config,
     hooks: {...config.hooks},
@@ -41,7 +52,7 @@ export async function load({root, name, type, baseConfig, resetCache}: {baseConf
   }
 
   plugin.module = await Module.fetch(plugin, config.engine)
-  const cache = new Cache(config, plugin, resetCache ? new Date() : (await lastUpdated(plugin)))
+  const cache = new Cache(config, plugin, opts.resetCache ? new Date() : (await lastUpdated(plugin)))
   plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))
 
