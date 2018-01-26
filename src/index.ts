@@ -11,7 +11,7 @@ import * as Module from './module'
 import * as Topics from './topics'
 import {undefault} from './util'
 
-export async function load({root, name, type, baseConfig}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string}): Promise<Config.IPlugin> {
+export async function load({root, name, type, baseConfig, resetCache}: {baseConfig?: Config.IConfig, root: string, name?: string, type: string, resetCache?: boolean}): Promise<Config.IPlugin> {
   const config = await Config.read({root, name, baseConfig})
   const pjson = config.pjson
   name = pjson.name
@@ -45,7 +45,7 @@ export async function load({root, name, type, baseConfig}: {baseConfig?: Config.
   }
 
   plugin.module = await Module.fetch(plugin, config.engine)
-  const cache = new Cache(config, plugin, await lastUpdated(plugin))
+  const cache = new Cache(config, plugin, resetCache ? new Date() : (await lastUpdated(plugin)))
   plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))
 
@@ -65,10 +65,10 @@ async function lastUpdated(plugin: Config.IPlugin): Promise<Date> {
     files = files.map(f => require.resolve(f))
     let stats = await Promise.all(files.map(f => fs.stat(f)))
     const max = _.maxBy(stats, 'mtime')
-    if (!max) return new Date(0)
+    if (!max) return new Date()
     return max.mtime
   } catch (err) {
     cli.warn(err)
-    return new Date(0)
+    return new Date()
   }
 }
