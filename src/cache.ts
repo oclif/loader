@@ -23,14 +23,19 @@ export default class PluginCache extends ManifestFile {
     const file = path.join(config.cacheDir, 'plugin_cache', [type, `${name}.json`].join(path.sep))
     super(['@dxcli/load', name].join(':'), file)
     this.type = 'cache'
-    this.cacheKey = [config.version, version, lastUpdated].join(':')
+    this.cacheKey = [config.version, version, lastUpdated.toISOString()].join(':')
+    this.debug('file: %s cacheKey: %s', this.file, this.cacheKey)
   }
 
   async fetch<T extends keyof CacheTypes>(key: T, fn: () => Promise<CacheTypes[T]['input']>): Promise<CacheTypes[T]['output']> {
     await this.lock.add('read')
     try {
       let [persist, cacheKey] = await this.get<CacheTypes[T]['output'], string>(key, 'cache_key')
-      if (persist && cacheKey && cacheKey === this.cacheKey) return persist
+      if (cacheKey && cacheKey !== this.cacheKey) {
+        await this.reset()
+        persist = undefined
+      }
+      if (persist) return persist
       this.debug('fetching', key)
       let input = await fn()
       try {
