@@ -15,8 +15,8 @@ install:
       cd plugins\heroku-cli-status
       yarn --ignore-scripts
       .\node_modules\.bin\tsc
-      $host.SetShouldExit(0)
-  - cd plugins\heroku-run && yarn
+      cd ..
+  - cd plugins\heroku-run && yarn && cd ..
 test_script:
   - .\node_modules\.bin\nps ci.test
 after_test:
