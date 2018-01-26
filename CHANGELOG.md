@@ -1,3 +1,11 @@
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/dxcli/loader/compare/5af1f7980444de32f0cc4bed3e03aee3f8209589...v0.2.2) (2018-01-26)
+
+
+### Bug Fixes
+
+* added resetCache ([6a688c8](https://github.com/dxcli/loader/commit/6a688c8))
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/dxcli/loader/compare/929b009e05f2edaaa1c02d9605d9d8d3f9fa0da0...v0.2.1) (2018-01-26)
 
