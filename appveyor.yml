@@ -11,7 +11,9 @@ install:
   - git config --global user.email "dxcli@example.com"
   - git config --global user.name "dxcli"
   - yarn
-  - cd plugins\heroku-cli-status && yarn --ignore-scripts && .\node_modules\.bin\tsc && exit 0
+  - ps: |
+      cd plugins\heroku-cli-status && yarn --ignore-scripts && .\node_modules\.bin\tsc
+      $host.SetShouldExit(0)
   - cd plugins\heroku-run && yarn
 test_script:
   - .\node_modules\.bin\nps ci.test
