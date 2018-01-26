@@ -12,7 +12,9 @@ install:
   - git config --global user.name "dxcli"
   - yarn
   - ps: |
-      cd plugins\heroku-cli-status && yarn --ignore-scripts && .\node_modules\.bin\tsc
+      cd plugins\heroku-cli-status
+      yarn --ignore-scripts
+      .\node_modules\.bin\tsc
       $host.SetShouldExit(0)
   - cd plugins\heroku-run && yarn
 test_script:
