@@ -6,14 +6,15 @@
     "module": "commonjs",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "sourceMap": true,
     "outDir": "./lib",
-    "rootDir": "./src",
+    "rootDirs": [
+      "./src"
+    ],
+    "sourceMap": true,
     "strict": true,
-    "strictFunctionTypes": false,
     "target": "es2017"
   },
   "include": [
-    "src/**/*"
+    "./src/**/*"
   ]
 }
