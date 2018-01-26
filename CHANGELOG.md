@@ -1,3 +1,11 @@
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/dxcli/loader/compare/6a688c847f7964f6d6d2c858b69ef8f6dfd755e3...v0.2.3) (2018-01-26)
+
+
+### Bug Fixes
+
+* fixed plugin module loading ([85102c7](https://github.com/dxcli/loader/commit/85102c7))
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/dxcli/loader/compare/5af1f7980444de32f0cc4bed3e03aee3f8209589...v0.2.2) (2018-01-26)
 
