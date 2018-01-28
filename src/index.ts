@@ -3,28 +3,34 @@ import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import * as _ from 'lodash'
+import * as path from 'path'
 
 import * as Commands from './commands'
 import * as Module from './module'
 import * as Topics from './topics'
 import {undefault} from './util'
 
+const loaderPjson = require('../package.json')
+
 export interface LoadOptions {
   root?: string
   type?: string
   baseConfig?: Config.IConfig
+  config?: Config.IConfig
   name?: string
   tag?: string
   resetCache?: boolean
 }
 
 export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
-  const config = await Config.read(opts)
+  const config = opts.config || await Config.read(opts)
   const pjson = config.pjson
   const name = pjson.name
   const debug = require('debug')(['@dxcli/load', name].join(':'))
   const version = pjson.version
   const type = opts.type || 'core'
+
+  debug(loaderPjson.name, loaderPjson.version)
 
   const plugin: Config.IPlugin = {
     name,
@@ -53,10 +59,12 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
 
   async function getNewestCommand(plugin: Config.IPlugin): Promise<Date> {
     try {
-      let files = await globby([`${plugin.config.commandsDir}/**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
-      files = files.concat(...Object.values(plugin.config.hooks))
-      files = files.map(f => require.resolve(f))
-      let stats = await Promise.all(files.map(async f => [f, await fs.stat(f)] as [string, fs.Stats]))
+      if (!await fs.pathExists(path.join(plugin.root, '.git'))) return new Date(0)
+      let files = await globby([`${plugin.root}/+(src|lib)/**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'])
+      let stats = await Promise.all(files.map(async f => {
+        const stat = await fs.stat(f)
+        return [f, stat] as [string, fs.Stats]
+      }))
       const max = _.maxBy(stats, '[1].mtime')
       if (!max) return new Date()
       debug('most recently updated file: %s %o', max[0], max[1].mtime)

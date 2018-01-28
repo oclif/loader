@@ -4,72 +4,93 @@ import cli from 'cli-ux'
 import * as globby from 'globby'
 import * as _ from 'lodash'
 import * as path from 'path'
+import * as TSNode from 'ts-node'
 
 import Cache from './cache'
 import {undefault} from './util'
 
 export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ICachedCommand[]> {
+  function getCached(c: Config.ICommand, id?: string): Config.ICachedCommand {
+    if (id) c.id = id
+    c.pluginName = plugin.name
+    if (c.convertToCached) return c.convertToCached()
+    return convertToCached(c)
+  }
+
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
   const cacheFile = path.join(plugin.config.cacheDir, 'commands', plugin.type, `${plugin.name}.json`)
   const cacheKey = [plugin.config.version, plugin.version, lastUpdated.toISOString()].join(':')
-  const cache = new Cache<Config.ICachedCommand[]>(cacheFile, cacheKey, 'commands')
+  const cache = new Cache<Config.ICachedCommand[]>(cacheFile, cacheKey, plugin.name)
 
-  async function fetchCommandIDs(): Promise<string[]> {
-    function idFromPath(file: string) {
-      const p = path.parse(file)
-      const topics = p.dir.split(path.sep)
-      let command = p.name !== 'index' && p.name
-      return _([...topics, command]).compact().join(':')
+  async function fetchFromDir(dir: string, ts: boolean) {
+    if (ts) {
+      debug('loading ts commands')
+      const tsNode: typeof TSNode = require('ts-node')
+      tsNode.register({project: false, cache: false, typeCheck: true,
+        compilerOptions: {
+          target: 'esnext',
+          module: 'commonjs',
+          rootDirs: [`${plugin.root}/src`],
+          typeRoots: [`${plugin.root}/node_modules/@types`],
+        }
+      })
     }
 
-    let ids = ((plugin.module && plugin.module.commands) || []).map(c => c.id) as string[]
-
-    if (!plugin.config.commandsDir) return ids
-    debug(`loading IDs from ${plugin.config.commandsDir}`)
-    const files = await globby(['**/*.+(js|ts)', '!**/*.+(d.ts|test.ts|test.js)'], {
-      nodir: true,
-      cwd: plugin.config.commandsDir,
-    })
-    ids = ids.concat(files.map(idFromPath))
-    debug('commandIDs dir: %s ids: %s', plugin.config.commandsDir, ids.join(' '))
-    return ids
-  }
-
-  function findCommand(id: string): Config.ICommand {
-    function findCommandInDir(id: string): Config.ICommand {
-      function commandPath(id: string): string {
-        if (!plugin.config.commandsDir) throw new Error('commandsDir not set')
-        return require.resolve(path.join(plugin.config.commandsDir, id.split(':').join(path.sep)))
+    async function fetchCommandIDs(): Promise<string[]> {
+      function idFromPath(file: string) {
+        const p = path.parse(file)
+        const topics = p.dir.split(path.sep)
+        let command = p.name !== 'index' && p.name
+        return _([...topics, command]).compact().join(':')
       }
 
-      let c = undefault(require(commandPath(id)))
-      return c
+      debug(`loading IDs from ${dir}`)
+      const files = await globby(['**/*.+(js|ts)', '!**/*.+(d.ts|test.ts|test.js)'], {cwd: dir})
+      let ids = files.map(idFromPath)
+      debug('commandIDs dir: %s ids: %s', dir, ids.join(' '))
+      return ids
     }
-    let cmd = plugin.module && plugin.module.commands && plugin.module.commands.find(c => c.id === id)
-    if (cmd) return cmd
-    return findCommandInDir(id)
+
+    function findCommand(id: string): Config.ICommand {
+      function findCommandInDir(id: string): Config.ICommand {
+        function commandPath(id: string): string {
+          return require.resolve(path.join(dir, ...id.split(':')))
+        }
+        debug('fetching %s from %s', id, dir)
+        const p = commandPath(id)
+        let c = undefault(require(p))
+        return c
+      }
+      return findCommandInDir(id)
+    }
+
+    return (await cache.fetch('commands', async (): Promise<Config.ICachedCommand[]> => {
+      const commands = (await fetchCommandIDs())
+        .map(id => {
+          try {
+            return getCached(findCommand(id), id)
+          } catch (err) { cli.warn(err) }
+        })
+      return _.compact(commands)
+    }))
+      .map((cmd: Config.ICachedCommand): Config.ICachedCommand => ({
+        ...cmd,
+        load: async () => findCommand(cmd.id),
+      }))
   }
 
-  return (await cache.fetch('commands', async (): Promise<Config.ICachedCommand[]> => {
-    const commands = (await fetchCommandIDs())
-      .map(id => {
-        try {
-          const c = findCommand(id)
-          try {
-            if (!c.id) c.id = id
-            c.plugin = plugin
-          } catch (err) {
-            cli.warn(err, {context: {plugin: plugin.root}})
-          }
-          if (c.convertToCached) return c.convertToCached()
-          return convertToCached(c)
-        } catch (err) { cli.warn(err) }
-      })
-    return _.compact(commands)
-  }))
-    .map((cmd: Config.ICachedCommand): Config.ICachedCommand => ({
-      ...cmd,
-      id: cmd.id,
-      load: async () => findCommand(cmd.id),
-    }))
+  let commands: Config.ICachedCommand[] = []
+  if (plugin.config.commandsDirTS) {
+    try {
+      commands.push(...await fetchFromDir(plugin.config.commandsDirTS, true))
+    } catch (err) {
+      cli.warn(err)
+      // debug(err)
+    }
+  }
+  if (plugin.config.commandsDir) commands.push(...await fetchFromDir(plugin.config.commandsDir, false))
+  if (plugin.module) {
+    commands.push(...(plugin.module.commands || []).map(c => getCached(c)))
+  }
+  return commands
 }

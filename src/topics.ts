@@ -19,7 +19,7 @@ function topicsToArray(input: any, base?: string): Config.ITopic[] {
 export async function topics(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ITopic[]> {
   const cacheFile = path.join(plugin.config.cacheDir, 'topics', plugin.type, `${plugin.name}.json`)
   const cacheKey = [plugin.config.version, plugin.version, lastUpdated.toISOString()].join(':')
-  const cache = new Cache<Config.ITopic[]>(cacheFile, cacheKey, 'topics')
+  const cache = new Cache<Config.ITopic[]>(cacheFile, cacheKey, plugin.name)
 
   const pluginTopics = async () => {
     try {
