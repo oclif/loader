@@ -8,6 +8,7 @@ import * as path from 'path'
 import * as Commands from './commands'
 import * as Module from './module'
 import * as Topics from './topics'
+import {registerTSNode} from './typescript'
 import {undefault} from './util'
 
 const loaderPjson = require('../package.json')
@@ -45,8 +46,12 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
     plugins: [],
   }
 
+  if (config.pluginsModuleTS || config.hooksTS || config.commandsDirTS) {
+    registerTSNode(debug, config.root)
+  }
+
   if (config.pluginsModule) {
-    plugin.plugins = await undefault(require(config.pluginsModule))(config)
+    plugin.plugins = await undefault(require(config.pluginsModuleTS || config.pluginsModule))(config)
   } else if (_.isArray(pjson.dxcli.plugins)) {
     plugin.plugins = _.compact(await Promise.all<Config.IPlugin | undefined>(pjson.dxcli.plugins.map(async (p: string) => {
       try {

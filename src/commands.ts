@@ -4,7 +4,6 @@ import cli from 'cli-ux'
 import * as globby from 'globby'
 import * as _ from 'lodash'
 import * as path from 'path'
-import * as TSNode from 'ts-node'
 
 import Cache from './cache'
 import {undefault} from './util'
@@ -22,20 +21,7 @@ export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promi
   const cacheKey = [plugin.config.version, plugin.version, lastUpdated.toISOString()].join(':')
   const cache = new Cache<Config.ICachedCommand[]>(cacheFile, cacheKey, plugin.name)
 
-  async function fetchFromDir(dir: string, ts: boolean) {
-    if (ts) {
-      debug('loading ts commands')
-      const tsNode: typeof TSNode = require('ts-node')
-      tsNode.register({project: false, cache: false, typeCheck: true,
-        compilerOptions: {
-          target: 'esnext',
-          module: 'commonjs',
-          rootDirs: [`${plugin.root}/src`],
-          typeRoots: [`${plugin.root}/node_modules/@types`],
-        }
-      })
-    }
-
+  async function fetchFromDir(dir: string) {
     async function fetchCommandIDs(): Promise<string[]> {
       function idFromPath(file: string) {
         const p = path.parse(file)
@@ -82,13 +68,13 @@ export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promi
   let commands: Config.ICachedCommand[] = []
   if (plugin.config.commandsDirTS) {
     try {
-      commands.push(...await fetchFromDir(plugin.config.commandsDirTS, true))
+      commands.push(...await fetchFromDir(plugin.config.commandsDirTS))
     } catch (err) {
       cli.warn(err)
       // debug(err)
     }
   }
-  if (plugin.config.commandsDir) commands.push(...await fetchFromDir(plugin.config.commandsDir, false))
+  if (plugin.config.commandsDir) commands.push(...await fetchFromDir(plugin.config.commandsDir))
   if (plugin.module) {
     commands.push(...(plugin.module.commands || []).map(c => getCached(c)))
   }
