@@ -1,3 +1,12 @@
+<a name="0.2.15"></a>
+## [0.2.15](https://github.com/dxcli/loader/compare/ef299df282c1149241cf73b87e1cd59f75d56b2e...v0.2.15) (2018-01-28)
+
+
+### Bug Fixes
+
+* set command id ([a171a09](https://github.com/dxcli/loader/commit/a171a09))
+* set command id ([3c119b7](https://github.com/dxcli/loader/commit/3c119b7))
+
 <a name="0.2.14"></a>
 ## [0.2.14](https://github.com/dxcli/loader/compare/9761fbe6a08717b211022efcf41ae18097bd91ff...v0.2.14) (2018-01-28)
 
