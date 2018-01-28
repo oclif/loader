@@ -1,3 +1,11 @@
+<a name="0.2.8"></a>
+## [0.2.8](https://github.com/dxcli/loader/compare/3b1c14ef01749b893b0a6a9c10b4d690a56f140e...v0.2.8) (2018-01-28)
+
+
+### Bug Fixes
+
+* allow loading with no opts ([7659519](https://github.com/dxcli/loader/commit/7659519))
+
 <a name="0.2.7"></a>
 ## [0.2.7](https://github.com/dxcli/loader/compare/37a34c5ec0c06c40ecc260b28c27c3deb8555809...v0.2.7) (2018-01-28)
 
