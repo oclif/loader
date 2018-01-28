@@ -10,10 +10,9 @@ import {undefault} from './util'
 
 export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ICachedCommand[]> {
   function getCached(c: Config.ICommand, id?: string): Config.ICachedCommand {
-    if (id) c.id = id
-    c.pluginName = plugin.name
-    if (c.convertToCached) return c.convertToCached()
-    return convertToCached(c)
+    const opts = {id, plugin}
+    if (c.convertToCached) return c.convertToCached(opts)
+    return convertToCached(c, opts)
   }
 
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
