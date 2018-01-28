@@ -1,3 +1,11 @@
+<a name="0.2.9"></a>
+## [0.2.9](https://github.com/dxcli/loader/compare/d1082c92644ca6c5d9f0122907f9afbce8d30e47...v0.2.9) (2018-01-28)
+
+
+### Bug Fixes
+
+* move some deps to peer ([5142316](https://github.com/dxcli/loader/commit/5142316))
+
 <a name="0.2.8"></a>
 ## [0.2.8](https://github.com/dxcli/loader/compare/3b1c14ef01749b893b0a6a9c10b4d690a56f140e...v0.2.8) (2018-01-28)
 
