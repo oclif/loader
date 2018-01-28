@@ -1,6 +1,7 @@
 import ManifestFile from '@dxcli/manifest-file'
 import * as path from 'path'
 
+import {convertToCached} from '@dxcli/command'
 import {ICachedCommand, ICommand, IConfig, ITopic} from '@dxcli/config'
 
 export type RunFn = (argv: string[], config: IConfig) => Promise<any>
@@ -13,20 +14,6 @@ export interface CacheTypes {
   commands: {
     input: ICommand[]
     output: ICachedCommand[]
-  }
-}
-
-export function convertToCachedCommand(c: ICommand): ICachedCommand {
-  return {
-    _base: c._base,
-    id: c.id,
-    description: c.description,
-    usage: c.usage,
-    plugin: c.plugin!,
-    hidden: c.hidden,
-    aliases: c.aliases || [],
-    help: c.help,
-    load: async () => c,
   }
 }
 
@@ -70,7 +57,10 @@ export default class PluginCache extends ManifestFile {
 
   private persist<T extends keyof CacheTypes>(key: T, v: CacheTypes[T]['input']): CacheTypes[T]['output'] {
     const map: any = {
-      commands: (commands: ICommand[]) => commands.map(convertToCachedCommand)
+      commands: (commands: ICommand[]) => commands.map(c => {
+        if (c.convertToCached) return c.convertToCached()
+        return convertToCached(c)
+      })
     }
     return key in map ? map[key](v) : v
   }

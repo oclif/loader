@@ -5,7 +5,8 @@
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/dxcli/loader/issues",
   "dependencies": {
-    "@dxcli/config": "^0.1.26",
+    "@dxcli/command": "^0.1.21",
+    "@dxcli/config": "^0.1.27",
     "@dxcli/manifest-file": "^0.0.4",
     "cli-ux": "^3.2.2",
     "debug": "^3.1.0",
@@ -13,10 +14,8 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@dxcli/dev": "^2.0.4",
-    "@dxcli/dev-nyc-config": "^0.0.3",
+    "@dxcli/dev": "^2.0.6",
     "@dxcli/dev-semantic-release": "^0.2.0",
-    "@dxcli/dev-tslint": "^0.0.17",
     "@dxcli/engine": "^0.1.12",
     "@dxcli/version": "^0.1.6",
     "@types/globby": "^6.1.0",
