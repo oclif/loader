@@ -6,22 +6,22 @@
   "bugs": "https://github.com/dxcli/loader/issues",
   "dependencies": {
     "@dxcli/manifest-file": "^0.0.4",
+    "cli-ux": "^3.2.2",
     "debug": "^3.1.0",
     "globby": "^7.1.1",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@dxcli/command": "^0.1.23",
-    "@dxcli/config": "^0.1.27",
-    "@dxcli/dev": "^2.0.12",
+    "@dxcli/command": "^0.2.0",
+    "@dxcli/config": "^0.1.28",
+    "@dxcli/dev": "^2.0.14",
     "@dxcli/dev-semantic-release": "^0.2.0",
-    "@dxcli/engine": "^0.1.12",
+    "@dxcli/engine": "^0.1.13",
     "@dxcli/semantic-release": "^0.3.3",
-    "@dxcli/tslint": "^0.0.24",
-    "@dxcli/version": "^0.1.7",
+    "@dxcli/tslint": "^0.1.2",
+    "@dxcli/version": "^0.1.10",
     "@types/globby": "^6.1.0",
     "chai": "^4.1.2",
-    "cli-ux": "^3.2.2",
     "eslint": "^4.16.0",
     "fs-extra": "^5.0.0",
     "husky": "^0.14.3",
@@ -47,8 +47,7 @@
   "main": "lib/index.js",
   "peerDependencies": {
     "@dxcli/command": "^0.1.21",
-    "@dxcli/config": "^0.1.27",
-    "cli-ux": "^3.2.2"
+    "@dxcli/config": "^0.1.27"
   },
   "repository": "dxcli/loader",
   "scripts": {
