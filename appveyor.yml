@@ -14,7 +14,7 @@ install:
       cd %APPVEYOR_BUILD_FOLDER%plugins\heroku-cli-status
       yarn --ignore-scripts
       .\node_modules\.bin\tsc
-  - cd %APPVEYOR_BUILD_FOLDER%plugins\heroku-run && yarn
+  - cd %APPVEYOR_BUILD_FOLDER%\plugins\heroku-run && yarn
   - cd %APPVEYOR_BUILD_FOLDER%
   - yarn
 test_script:
