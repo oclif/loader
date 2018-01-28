@@ -1,3 +1,11 @@
+<a name="0.2.11"></a>
+## [0.2.11](https://github.com/dxcli/loader/compare/5956c412264b44258ed3b4bfc97fae91e6d8f37a...v0.2.11) (2018-01-28)
+
+
+### Bug Fixes
+
+* add TS parsing for commands ([c9fc558](https://github.com/dxcli/loader/commit/c9fc558))
+
 <a name="0.2.10"></a>
 ## [0.2.10](https://github.com/dxcli/loader/compare/5142316df8a0957fcd5a8fd7b0f00a214c6c6be0...v0.2.10) (2018-01-28)
 
