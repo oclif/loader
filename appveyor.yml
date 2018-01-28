@@ -10,15 +10,15 @@ install:
   - git submodule update --init --recursive
   - git config --global user.email "dxcli@example.com"
   - git config --global user.name "dxcli"
-  - yarn
   - ps: |
       cd %APPVEYOR_BUILD_FOLDER%plugins\heroku-cli-status
       yarn --ignore-scripts
       .\node_modules\.bin\tsc
   - cd %APPVEYOR_BUILD_FOLDER%plugins\heroku-run && yarn
   - cd %APPVEYOR_BUILD_FOLDER%
+  - yarn
 test_script:
-  - .\node_modules\.bin\nps ci.test
+  - yarn test
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH

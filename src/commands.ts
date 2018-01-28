@@ -49,14 +49,13 @@ export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Co
   }
 
   return (await cache.fetch('commands', async (): Promise<Config.ICommand[]> => {
-    return _(await fetchCommandIDs())
+    const commands = (await fetchCommandIDs())
       .map(id => {
         try {
           return findCommand(id)
         } catch (err) { cli.warn(err) }
       })
-      .compact()
-      .value()
+    return _.compact(commands)
   }))
     .map((cmd: Config.ICachedCommand): Config.ICachedCommand => ({
       ...cmd,
