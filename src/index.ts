@@ -11,20 +11,20 @@ import * as Topics from './topics'
 import {undefault} from './util'
 
 export interface LoadOptions {
-  root: string
-  type: string
+  root?: string
+  type?: string
   baseConfig?: Config.IConfig
   name?: string
   tag?: string
   resetCache?: boolean
 }
 
-export async function load(opts: LoadOptions): Promise<Config.IPlugin> {
+export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
   const config = await Config.read(opts)
   const pjson = config.pjson
   const name = pjson.name
   const version = pjson.version
-  const type = opts.type
+  const type = opts.type || 'core'
 
   const plugin: Config.IPlugin = {
     name,
