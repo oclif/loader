@@ -1,3 +1,13 @@
+<a name="0.2.6"></a>
+## [0.2.6](https://github.com/dxcli/loader/compare/b36268ffb31d262c8e79fcbff5d38b6675c924c7...v0.2.6) (2018-01-28)
+
+
+### Bug Fixes
+
+* export convertToCachedCommand ([76f61b3](https://github.com/dxcli/loader/commit/76f61b3))
+* fix CI ([37a34c5](https://github.com/dxcli/loader/commit/37a34c5))
+* ran generator ([080b17f](https://github.com/dxcli/loader/commit/080b17f))
+
 <a name="0.2.5"></a>
 ## [0.2.5](https://github.com/dxcli/loader/compare/f56360e6816a4bbe877fd97444b502905f07c4a8...v0.2.5) (2018-01-26)
 
