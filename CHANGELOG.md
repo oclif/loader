@@ -1,3 +1,11 @@
+<a name="0.2.7"></a>
+## [0.2.7](https://github.com/dxcli/loader/compare/37a34c5ec0c06c40ecc260b28c27c3deb8555809...v0.2.7) (2018-01-28)
+
+
+### Bug Fixes
+
+* use convertToCached from command ([3b1c14e](https://github.com/dxcli/loader/commit/3b1c14e))
+
 <a name="0.2.6"></a>
 ## [0.2.6](https://github.com/dxcli/loader/compare/b36268ffb31d262c8e79fcbff5d38b6675c924c7...v0.2.6) (2018-01-28)
 
