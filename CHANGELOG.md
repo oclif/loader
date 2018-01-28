@@ -1,3 +1,11 @@
+<a name="0.2.12"></a>
+## [0.2.12](https://github.com/dxcli/loader/compare/c9fc558514934c3775a4d5c0c50e95a85b725dd5...v0.2.12) (2018-01-28)
+
+
+### Bug Fixes
+
+* improve TS loading ([4b41a83](https://github.com/dxcli/loader/commit/4b41a83))
+
 <a name="0.2.11"></a>
 ## [0.2.11](https://github.com/dxcli/loader/compare/5956c412264b44258ed3b4bfc97fae91e6d8f37a...v0.2.11) (2018-01-28)
 
