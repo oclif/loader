@@ -1,3 +1,11 @@
+<a name="0.2.13"></a>
+## [0.2.13](https://github.com/dxcli/loader/compare/4b41a830788399157bc90918cc51cd89cfeef6e3...v0.2.13) (2018-01-28)
+
+
+### Bug Fixes
+
+* add convertToCached props ([9761fbe](https://github.com/dxcli/loader/commit/9761fbe))
+
 <a name="0.2.12"></a>
 ## [0.2.12](https://github.com/dxcli/loader/compare/c9fc558514934c3775a4d5c0c50e95a85b725dd5...v0.2.12) (2018-01-28)
 
