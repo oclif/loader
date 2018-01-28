@@ -68,21 +68,14 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-is-external"><a href="classes/plugincache.html" class="tsd-kind-icon">Plugin<wbr>Cache</a></li>
+								<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/plugincache.html" class="tsd-kind-icon">Plugin<wbr>Cache</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/cachetypes.html" class="tsd-kind-icon">Cache<wbr>Types</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter tsd-is-external"><a href="interfaces/iesmodule.html" class="tsd-kind-icon">IESModule</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/loadoptions.html" class="tsd-kind-icon">Load<wbr>Options</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#runfn" class="tsd-kind-icon">Run<wbr>Fn</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -98,56 +91,19 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-external">
-					<a name="runfn" class="tsd-anchor"></a>
-					<h3>Run<wbr>Fn</h3>
-					<div class="tsd-signature tsd-kind-icon">Run<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/cache.ts#L7">cache.ts:7</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>argv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IConfig</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>argv: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
-											</li>
-											<li>
-												<h5>config: <span class="tsd-signature-type">IConfig</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
 					<a name="commands" class="tsd-anchor"></a>
 					<h3>commands</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">(</span>plugin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPlugin</span>, cache<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Cache</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ICachedCommand</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">(</span>plugin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPlugin</span>, lastUpdated<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ICachedCommand</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/commands.ts#L10">commands.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5956c41/src/commands.ts#L11">commands.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -156,7 +112,7 @@
 									<h5>plugin: <span class="tsd-signature-type">IPlugin</span></h5>
 								</li>
 								<li>
-									<h5>cache: <span class="tsd-signature-type">Cache</span></h5>
+									<h5>lastUpdated: <span class="tsd-signature-type">Date</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ICachedCommand</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -173,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/module.ts#L6">module.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5956c41/src/module.ts#L6">module.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -199,7 +155,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/index.ts#L22">index.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5956c41/src/index.ts#L21">index.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -216,13 +172,13 @@
 					<a name="topics" class="tsd-anchor"></a>
 					<h3>topics</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">topics<span class="tsd-signature-symbol">(</span>plugin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPlugin</span>, cache<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Cache</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ITopic</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">topics<span class="tsd-signature-symbol">(</span>plugin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPlugin</span>, lastUpdated<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ITopic</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/topics.ts#L18">topics.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5956c41/src/topics.ts#L19">topics.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -231,7 +187,7 @@
 									<h5>plugin: <span class="tsd-signature-type">IPlugin</span></h5>
 								</li>
 								<li>
-									<h5>cache: <span class="tsd-signature-type">Cache</span></h5>
+									<h5>lastUpdated: <span class="tsd-signature-type">Date</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ITopic</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -248,7 +204,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5142316/src/util.ts#L6">util.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/dxcli/loader/blob/5956c41/src/util.ts#L6">util.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -279,20 +235,14 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 						<a href="classes/plugincache.html" class="tsd-kind-icon">Plugin<wbr>Cache</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="interfaces/cachetypes.html" class="tsd-kind-icon">Cache<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter tsd-is-external">
 						<a href="interfaces/iesmodule.html" class="tsd-kind-icon">IESModule</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/loadoptions.html" class="tsd-kind-icon">Load<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-is-external">
-						<a href="globals.html#runfn" class="tsd-kind-icon">Run<wbr>Fn</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#commands" class="tsd-kind-icon">commands</a>
