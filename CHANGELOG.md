@@ -1,3 +1,11 @@
+<a name="0.2.10"></a>
+## [0.2.10](https://github.com/dxcli/loader/compare/5142316df8a0957fcd5a8fd7b0f00a214c6c6be0...v0.2.10) (2018-01-28)
+
+
+### Bug Fixes
+
+* split caching into separate files ([5956c41](https://github.com/dxcli/loader/commit/5956c41))
+
 <a name="0.2.9"></a>
 ## [0.2.9](https://github.com/dxcli/loader/compare/d1082c92644ca6c5d9f0122907f9afbce8d30e47...v0.2.9) (2018-01-28)
 
