@@ -44,6 +44,7 @@ export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promi
         debug('fetching %s from %s', id, dir)
         const p = commandPath(id)
         let c = undefault(require(p))
+        c.id = id
         return c
       }
       return findCommandInDir(id)
@@ -54,7 +55,6 @@ export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promi
         .map(id => {
           try {
             const cmd = findCommand(id)
-            cmd.id = id
             return getCached(cmd)
           } catch (err) { cli.warn(err) }
         })
