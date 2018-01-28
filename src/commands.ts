@@ -9,8 +9,8 @@ import Cache from './cache'
 import {undefault} from './util'
 
 export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ICachedCommand[]> {
-  function getCached(c: Config.ICommand, id?: string): Config.ICachedCommand {
-    const opts = {id, plugin}
+  function getCached(c: Config.ICommand): Config.ICachedCommand {
+    const opts = {plugin}
     if (c.convertToCached) return c.convertToCached(opts)
     return convertToCached(c, opts)
   }
@@ -53,7 +53,9 @@ export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promi
       const commands = (await fetchCommandIDs())
         .map(id => {
           try {
-            return getCached(findCommand(id), id)
+            const cmd = findCommand(id)
+            cmd.id = id
+            return getCached(cmd)
           } catch (err) { cli.warn(err) }
         })
       return _.compact(commands)
