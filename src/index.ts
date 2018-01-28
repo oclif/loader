@@ -4,7 +4,7 @@ import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import * as _ from 'lodash'
 
-import Cache from './cache'
+import Cache, {convertToCachedCommand} from './cache'
 import * as Commands from './commands'
 import * as Module from './module'
 import * as Topics from './topics'
@@ -78,4 +78,8 @@ async function lastUpdated(plugin: Config.IPlugin): Promise<Date> {
     cli.warn(err)
     return new Date()
   }
+}
+
+export {
+  convertToCachedCommand,
 }

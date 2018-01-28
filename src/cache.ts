@@ -16,6 +16,20 @@ export interface CacheTypes {
   }
 }
 
+export function convertToCachedCommand(c: ICommand): ICachedCommand {
+  return {
+    _base: c._base,
+    id: c.id,
+    description: c.description,
+    usage: c.usage,
+    plugin: c.plugin!,
+    hidden: c.hidden,
+    aliases: c.aliases || [],
+    help: c.help,
+    load: async () => c,
+  }
+}
+
 export default class PluginCache extends ManifestFile {
   readonly cacheKey: string
 
@@ -56,21 +70,7 @@ export default class PluginCache extends ManifestFile {
 
   private persist<T extends keyof CacheTypes>(key: T, v: CacheTypes[T]['input']): CacheTypes[T]['output'] {
     const map: any = {
-      commands: (commands: ICommand[]): ICachedCommand[] => {
-        return commands.map(c => {
-          return {
-            _base: c._base,
-            id: c.id,
-            description: c.description,
-            usage: c.usage,
-            plugin: c.plugin!,
-            hidden: c.hidden,
-            aliases: c.aliases || [],
-            help: c.help,
-            load: async () => c,
-          }
-        })
-      }
+      commands: (commands: ICommand[]) => commands.map(convertToCachedCommand)
     }
     return key in map ? map[key](v) : v
   }
