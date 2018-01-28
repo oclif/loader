@@ -1,6 +1,7 @@
 import * as Config from '@dxcli/config'
 import cli from 'cli-ux'
 import * as _ from 'lodash'
+import * as path from 'path'
 
 import Cache from './cache'
 
@@ -15,7 +16,11 @@ function topicsToArray(input: any, base?: string): Config.ITopic[] {
   })
 }
 
-export async function topics(plugin: Config.IPlugin, cache: Cache): Promise<Config.ITopic[]> {
+export async function topics(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ITopic[]> {
+  const cacheFile = path.join(plugin.config.cacheDir, 'topics', plugin.type, `${plugin.name}.json`)
+  const cacheKey = [plugin.config.version, plugin.version, lastUpdated.toISOString()].join(':')
+  const cache = new Cache<Config.ITopic[]>(cacheFile, cacheKey, 'topics')
+
   const pluginTopics = async () => {
     try {
       let topics: Config.ITopic[] = await cache.fetch('topics', async () => {

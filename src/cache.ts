@@ -1,67 +1,35 @@
 import ManifestFile from '@dxcli/manifest-file'
-import * as path from 'path'
 
-import {convertToCached} from '@dxcli/command'
-import {ICachedCommand, ICommand, IConfig, ITopic} from '@dxcli/config'
-
-export type RunFn = (argv: string[], config: IConfig) => Promise<any>
-
-export interface CacheTypes {
-  topics: {
-    input: ITopic[]
-    output: ITopic[]
-  }
-  commands: {
-    input: ICommand[]
-    output: ICachedCommand[]
-  }
-}
-
-export default class PluginCache extends ManifestFile {
-  readonly cacheKey: string
-
-  constructor(config: IConfig, {type, name, version}: {type: string, name: string, version: string}, lastUpdated: Date) {
-    const file = path.join(config.cacheDir, 'plugin_cache', [type, `${name}.json`].join(path.sep))
+export default class PluginCache<T> extends ManifestFile {
+  constructor(public file: string, public cacheKey: string, public name: string) {
     super(['@dxcli/load', name].join(':'), file)
     this.type = 'cache'
-    this.cacheKey = [config.version, version, lastUpdated.toISOString()].join(':')
     this.debug('file: %s cacheKey: %s', this.file, this.cacheKey)
   }
 
-  async fetch<T extends keyof CacheTypes>(key: T, fn: () => Promise<CacheTypes[T]['input']>): Promise<CacheTypes[T]['output']> {
+  async fetch(key: string, fn: () => Promise<T>): Promise<T> {
     await this.lock.add('read')
     try {
-      let [persist, cacheKey] = await this.get<CacheTypes[T]['output'], string>(key, 'cache_key')
+      let [output, cacheKey] = await this.get(key, 'cache_key') as [T | undefined, string]
       if (cacheKey && cacheKey !== this.cacheKey) {
         await this.reset()
-        persist = undefined
+        output = undefined
       }
-      if (persist) return persist
+      if (output) return output
       this.debug('fetching', key)
       let input = await fn()
       try {
         await this.lock.add('write', {timeout: 200, reason: 'cache'})
-        const persist = this.persist(key, input)
-        await this.set(['cache_key', this.cacheKey], [key, persist])
-        return persist
+        await this.set(['cache_key', this.cacheKey], [key, input])
+        return input
       } catch (err) {
         this.debug(err)
-        return this.persist(key, input)
+        return input
       } finally {
         await this.lock.remove('write')
       }
     } finally {
       await this.lock.remove('read')
     }
-  }
-
-  private persist<T extends keyof CacheTypes>(key: T, v: CacheTypes[T]['input']): CacheTypes[T]['output'] {
-    const map: any = {
-      commands: (commands: ICommand[]) => commands.map(c => {
-        if (c.convertToCached) return c.convertToCached()
-        return convertToCached(c)
-      })
-    }
-    return key in map ? map[key](v) : v
   }
 }

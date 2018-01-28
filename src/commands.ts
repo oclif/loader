@@ -1,3 +1,4 @@
+import {convertToCached} from '@dxcli/command'
 import * as Config from '@dxcli/config'
 import cli from 'cli-ux'
 import * as globby from 'globby'
@@ -7,8 +8,11 @@ import * as path from 'path'
 import Cache from './cache'
 import {undefault} from './util'
 
-export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Config.ICachedCommand[]> {
+export async function commands(plugin: Config.IPlugin, lastUpdated: Date): Promise<Config.ICachedCommand[]> {
   const debug = require('debug')(['@dxcli/load', plugin.name].join(':'))
+  const cacheFile = path.join(plugin.config.cacheDir, 'commands', plugin.type, `${plugin.name}.json`)
+  const cacheKey = [plugin.config.version, plugin.version, lastUpdated.toISOString()].join(':')
+  const cache = new Cache<Config.ICachedCommand[]>(cacheFile, cacheKey, 'commands')
 
   async function fetchCommandIDs(): Promise<string[]> {
     function idFromPath(file: string) {
@@ -39,8 +43,6 @@ export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Co
       }
 
       let c = undefault(require(commandPath(id)))
-      if (!c.id) c.id = id
-      c.plugin = plugin
       return c
     }
     let cmd = plugin.module && plugin.module.commands && plugin.module.commands.find(c => c.id === id)
@@ -48,11 +50,19 @@ export async function commands(plugin: Config.IPlugin, cache: Cache): Promise<Co
     return findCommandInDir(id)
   }
 
-  return (await cache.fetch('commands', async (): Promise<Config.ICommand[]> => {
+  return (await cache.fetch('commands', async (): Promise<Config.ICachedCommand[]> => {
     const commands = (await fetchCommandIDs())
       .map(id => {
         try {
-          return findCommand(id)
+          const c = findCommand(id)
+          try {
+            if (!c.id) c.id = id
+            c.plugin = plugin
+          } catch (err) {
+            cli.warn(err, {context: {plugin: plugin.root}})
+          }
+          if (c.convertToCached) return c.convertToCached()
+          return convertToCached(c)
         } catch (err) { cli.warn(err) }
       })
     return _.compact(commands)

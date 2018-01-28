@@ -4,7 +4,6 @@ import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import * as _ from 'lodash'
 
-import Cache from './cache'
 import * as Commands from './commands'
 import * as Module from './module'
 import * as Topics from './topics'
@@ -23,6 +22,7 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
   const config = await Config.read(opts)
   const pjson = config.pjson
   const name = pjson.name
+  const debug = require('debug')(['@dxcli/load', name].join(':'))
   const version = pjson.version
   const type = opts.type || 'core'
 
@@ -51,10 +51,26 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
     })))
   }
 
+  async function getNewestCommand(plugin: Config.IPlugin): Promise<Date> {
+    try {
+      let files = await globby([`${plugin.config.commandsDir}/**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
+      files = files.concat(...Object.values(plugin.config.hooks))
+      files = files.map(f => require.resolve(f))
+      let stats = await Promise.all(files.map(async f => [f, await fs.stat(f)] as [string, fs.Stats]))
+      const max = _.maxBy(stats, '[1].mtime')
+      if (!max) return new Date()
+      debug('most recently updated file: %s %o', max[0], max[1].mtime)
+      return max[1].mtime
+    } catch (err) {
+      cli.warn(err)
+      return new Date()
+    }
+  }
+
   plugin.module = await Module.fetch(plugin, config.engine)
-  const cache = new Cache(config, plugin, opts.resetCache ? new Date() : (await lastUpdated(plugin)))
-  plugin.topics = (await Topics.topics(plugin, cache)).concat(...plugin.plugins.map(p => p.topics))
-  plugin.commands = (await Commands.commands(plugin, cache)).concat(...plugin.plugins.map(p => p.commands))
+  const lastUpdated = opts.resetCache ? new Date() : await getNewestCommand(plugin)
+  plugin.topics = (await Topics.topics(plugin, lastUpdated)).concat(...plugin.plugins.map(p => p.topics))
+  plugin.commands = (await Commands.commands(plugin, lastUpdated)).concat(...plugin.plugins.map(p => p.commands))
 
   for (let p of plugin.plugins) {
     for (let [hook, hooks] of Object.entries(p.hooks)) {
@@ -63,19 +79,4 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
   }
 
   return plugin
-}
-
-async function lastUpdated(plugin: Config.IPlugin): Promise<Date> {
-  try {
-    let files = await globby([`${plugin.config.commandsDir}/**/*.+(js|ts)`, '!**/*.+(d.ts|test.ts|test.js)'], {nodir: true})
-    files = files.concat(...Object.values(plugin.config.hooks))
-    files = files.map(f => require.resolve(f))
-    let stats = await Promise.all(files.map(f => fs.stat(f)))
-    const max = _.maxBy(stats, 'mtime')
-    if (!max) return new Date()
-    return max.mtime
-  } catch (err) {
-    cli.warn(err)
-    return new Date()
-  }
 }
