@@ -17,7 +17,7 @@
     "@dxcli/dev-semantic-release": "^0.2.0",
     "@dxcli/engine": "^0.1.12",
     "@dxcli/semantic-release": "^0.3.3",
-    "@dxcli/tslint": "^0.0.24",
+    "@dxcli/tslint": "^0.1.0",
     "@dxcli/version": "^0.1.7",
     "@types/globby": "^6.1.0",
     "chai": "^4.1.2",
