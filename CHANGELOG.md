@@ -1,3 +1,11 @@
+<a name="0.2.14"></a>
+## [0.2.14](https://github.com/dxcli/loader/compare/9761fbe6a08717b211022efcf41ae18097bd91ff...v0.2.14) (2018-01-28)
+
+
+### Bug Fixes
+
+* make ts loader pull in extra roots ([ef299df](https://github.com/dxcli/loader/commit/ef299df))
+
 <a name="0.2.13"></a>
 ## [0.2.13](https://github.com/dxcli/loader/compare/4b41a830788399157bc90918cc51cd89cfeef6e3...v0.2.13) (2018-01-28)
 
