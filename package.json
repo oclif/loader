@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "@dxcli/command": "^0.2.4",
-    "@dxcli/config": "^0.1.33",
-    "@dxcli/dev": "^2.0.15",
+    "@dxcli/config": "^0.1.34",
+    "@dxcli/dev": "^2.0.16",
     "@dxcli/dev-semantic-release": "^0.2.0",
     "@dxcli/engine": "^0.1.17",
     "@dxcli/semantic-release": "^0.3.3",

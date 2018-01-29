@@ -6,7 +6,6 @@ import * as _ from 'lodash'
 import * as path from 'path'
 
 import * as Commands from './commands'
-import * as Module from './module'
 import * as Topics from './topics'
 import {registerTSNode} from './typescript'
 import {undefault} from './util'
@@ -80,7 +79,6 @@ export async function load(opts: LoadOptions = {}): Promise<Config.IPlugin> {
     }
   }
 
-  plugin.module = await Module.fetch(plugin, config.engine)
   const lastUpdated = opts.resetCache ? new Date() : await getNewestCommand(plugin)
   plugin.topics = (await Topics.topics(plugin, lastUpdated)).concat(...plugin.plugins.map(p => p.topics))
   plugin.commands = (await Commands.commands(plugin, lastUpdated)).concat(...plugin.plugins.map(p => p.commands))
