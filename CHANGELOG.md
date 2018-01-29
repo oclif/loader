@@ -1,3 +1,11 @@
+<a name="0.2.16"></a>
+## [0.2.16](https://github.com/dxcli/loader/compare/a171a09ecf60ed3052f7906940763d546912dfdb...v0.2.16) (2018-01-29)
+
+
+### Bug Fixes
+
+* remove plugin module ([24f1a60](https://github.com/dxcli/loader/commit/24f1a60))
+
 <a name="0.2.15"></a>
 ## [0.2.15](https://github.com/dxcli/loader/compare/ef299df282c1149241cf73b87e1cd59f75d56b2e...v0.2.15) (2018-01-28)
 

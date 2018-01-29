@@ -1,7 +1,7 @@
 {
   "name": "@dxcli/loader",
   "description": "loads dxcli plugins",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/dxcli/loader/issues",
   "dependencies": {
